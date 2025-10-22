@@ -1,0 +1,8 @@
+services:
+  haraka-adm:
+    build:
+      context: ../../
+      dockerfile: docker/haraka/Dockerfile
+    image: haraka-adm
+    ports:
+      - "5001:3000"

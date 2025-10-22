@@ -1,0 +1,8 @@
+services:
+  mulabet-adm:
+    build:
+      context: ../../
+      dockerfile: docker/mulabet/Dockerfile
+    image: mulabet-adm
+    ports:
+      - "5000:3000"

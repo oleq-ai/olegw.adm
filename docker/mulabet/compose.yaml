@@ -1,0 +1,8 @@
+services:
+  msgt-adm:
+    build:
+      context: ../../
+      dockerfile: docker/msagent/Dockerfile
+    image: msgt-adm
+    ports:
+      - "5000:3000"

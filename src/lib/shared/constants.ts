@@ -1,0 +1,13 @@
+export const TAGS = {
+  ROLE: "ROLE",
+  USER: "USER",
+  GAMES: "GAMES",
+  DEPOSITS: "DEPOSITS",
+  WITHDRAWALS: "WITHDRAWALS",
+  PLAYERS: "PLAYERS",
+  STATEMENTS: "STATEMENTS",
+  LEADERBOARD: "LEADERBOARD",
+} as const;
+
+export const DEFAULT_PAGE_SIZE = 10;
+export const PAGE_INDEX = 0;

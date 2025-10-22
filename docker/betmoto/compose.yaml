@@ -1,0 +1,8 @@
+services:
+  betmoto-adm:
+    build:
+      context: ../../
+      dockerfile: docker/betmoto/Dockerfile
+    image: betmoto-adm
+    ports:
+      - "5002:3000"

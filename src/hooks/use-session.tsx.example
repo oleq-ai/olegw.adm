@@ -1,0 +1,28 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+
+import { Session } from "@/lib/session/session.types";
+
+async function fetchSession(): Promise<Session> {
+  const response = await fetch("/api/session");
+  if (response.ok) {
+    const session = await response.json();
+    return session;
+  }
+  const error = await response.json();
+  throw error;
+}
+
+export function useSession() {
+  const { data, isPending, isError } = useQuery({
+    queryFn: fetchSession,
+    queryKey: ["session"],
+    refetchOnWindowFocus: true,
+  });
+
+  if (isPending) return { status: "pending" as const, session: null };
+  if (isError || !data)
+    return { status: "unauthenticated" as const, session: null };
+  return { status: "authenticated" as const, session: data };
+}
