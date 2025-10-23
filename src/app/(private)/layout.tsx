@@ -1,24 +1,25 @@
+import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import SkipToMain from "@/components/layout/skip-to-main";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import env from "@/config/server.env";
+import { getSession } from "@/lib/session/session";
 import { cn } from "@/lib/utils";
 
 import SessionManager from "./session-manager";
 
-export default function PrivateLayout({
+export default async function PrivateLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
-  // For static export mode, we'll use client-side session management
-  // Create a mock user object for static generation
-  const user = {
-    name: "Admin User",
-    email: "admin@oleqgw.com",
-    modules: [],
-    role: "admin",
-  };
+  const session = await getSession();
+
+  if (!session) redirect("/sign-in");
+
+  const { name, email, modules, role } = session;
+
+  const user = { name, email, modules, role };
 
   return (
     <SessionManager timeout={env.SESSION_TIMEOUT}>

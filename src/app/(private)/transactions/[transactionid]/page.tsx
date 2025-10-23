@@ -10,13 +10,6 @@ export const metadata: Metadata = {
   title: "Transaction Details",
 };
 
-// Generate static params for export mode
-export async function generateStaticParams() {
-  // Return empty array for dynamic routes in export mode
-  // The actual pages will be generated at runtime
-  return [];
-}
-
 type Props = {
   params: Promise<{ transactionid: string }>;
 };
@@ -63,7 +56,7 @@ export default async function TransactionDetailsPage({ params }: Props) {
 
         {/* Transaction Details */}
         <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <PermissionGate session={session} permissions={["payments:view"]}>
+          <PermissionGate session={session} permissions={["transactions:view"]}>
             <TransactionDetails transaction={res.data} />
           </PermissionGate>
         </div>

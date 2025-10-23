@@ -37,7 +37,7 @@ export default async function TransactionsPage() {
             <div className="hidden md:block">
               <PermissionGate
                 session={session}
-                permissions={["payments:manage"]}
+                permissions={["transactions:view"]}
               >
                 <Button asChild>
                   <Link href="/transactions/create">
@@ -157,22 +157,34 @@ export default async function TransactionsPage() {
               </TabsList>
             </div>
             <TabsContent value="all" className="mt-0">
-              <PermissionGate session={session} permissions={["payments:view"]}>
+              <PermissionGate
+                session={session}
+                permissions={["transactions:view"]}
+              >
                 <TransactionsTable />
               </PermissionGate>
             </TabsContent>
             <TabsContent value="completed" className="mt-0">
-              <PermissionGate session={session} permissions={["payments:view"]}>
+              <PermissionGate
+                session={session}
+                permissions={["transactions:view"]}
+              >
                 <CompletedTransactionsTable />
               </PermissionGate>
             </TabsContent>
             <TabsContent value="pending" className="mt-0">
-              <PermissionGate session={session} permissions={["payments:view"]}>
+              <PermissionGate
+                session={session}
+                permissions={["transactions:view"]}
+              >
                 <PendingTransactionsTable />
               </PermissionGate>
             </TabsContent>
             <TabsContent value="failed" className="mt-0">
-              <PermissionGate session={session} permissions={["payments:view"]}>
+              <PermissionGate
+                session={session}
+                permissions={["transactions:view"]}
+              >
                 <FailedTransactionsTable />
               </PermissionGate>
             </TabsContent>
