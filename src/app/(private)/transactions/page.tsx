@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import { Activity, CheckCircle, Clock, Loader2, XCircle } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -179,16 +178,6 @@ export default function TransactionsPage() {
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4" />
                       <span>Completed</span>
-                      <Badge
-                        variant="secondary"
-                        className="ml-2 bg-green-100 text-xs text-green-700"
-                      >
-                        {isLoadingStats ? (
-                          <Loader2 className="h-3 w-3 animate-spin" />
-                        ) : (
-                          stats.completed.toLocaleString()
-                        )}
-                      </Badge>
                     </div>
                   </TabsTrigger>
                   <TabsTrigger
@@ -198,16 +187,6 @@ export default function TransactionsPage() {
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
                       <span>Pending</span>
-                      <Badge
-                        variant="secondary"
-                        className="ml-2 bg-yellow-100 text-xs text-yellow-700"
-                      >
-                        {isLoadingStats ? (
-                          <Loader2 className="h-3 w-3 animate-spin" />
-                        ) : (
-                          stats.pending.toLocaleString()
-                        )}
-                      </Badge>
                     </div>
                   </TabsTrigger>
                   <TabsTrigger
@@ -217,16 +196,6 @@ export default function TransactionsPage() {
                     <div className="flex items-center gap-2">
                       <XCircle className="h-4 w-4" />
                       <span>Failed</span>
-                      <Badge
-                        variant="secondary"
-                        className="ml-2 bg-red-100 text-xs text-red-700"
-                      >
-                        {isLoadingStats ? (
-                          <Loader2 className="h-3 w-3 animate-spin" />
-                        ) : (
-                          stats.failed.toLocaleString()
-                        )}
-                      </Badge>
                     </div>
                   </TabsTrigger>
                 </TabsList>

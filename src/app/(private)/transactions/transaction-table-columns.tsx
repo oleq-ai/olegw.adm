@@ -32,13 +32,8 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
     cell: ({ row }) => {
       const transactionId = row.getValue("transactionid") as string;
       return (
-        <div className="group flex items-center space-x-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-xs font-bold text-gray-600">
-            {transactionId.slice(-2)}
-          </div>
-          <div className="cursor-pointer font-mono text-sm font-semibold text-gray-900 transition-colors hover:text-gray-700">
-            {transactionId}
-          </div>
+        <div className="cursor-pointer font-mono text-sm font-semibold text-gray-900 transition-colors hover:text-gray-700">
+          {transactionId}
         </div>
       );
     },
