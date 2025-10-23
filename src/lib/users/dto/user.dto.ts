@@ -18,7 +18,8 @@ const baseUserSchema = z.object({
   mobile: z
     .string()
     .min(1, { message: "Required" })
-    .refine(isValidPhoneNumber, { message: "Invalid phone number" }),
+    .refine(isValidPhoneNumber, { message: "Invalid phone number" })
+    .optional(),
   gender: z.nativeEnum(Gender),
   roleid: z.string().min(1, { message: "Required" }),
   modules: z.array(z.string()).optional(),

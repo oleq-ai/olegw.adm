@@ -1,16 +1,20 @@
 "use client";
 
 import { format } from "date-fns";
-
-import { Badge } from "@/components/ui/badge";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+  ArrowLeft,
+  Calendar,
+  Clock,
+  CreditCard,
+  DollarSign,
+  Hash,
+  Phone,
+  Receipt,
+  User,
+} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Transaction } from "@/lib/transactions/types/transaction.types";
 
 interface TransactionDetailsProps {
@@ -20,28 +24,6 @@ interface TransactionDetailsProps {
 export default function TransactionDetails({
   transaction,
 }: TransactionDetailsProps) {
-  const getStatusBadge = (description: string) => {
-    if (description.toLowerCase().includes("success")) {
-      return (
-        <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-          Completed
-        </Badge>
-      );
-    } else if (description.toLowerCase().includes("pending")) {
-      return (
-        <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
-          Pending
-        </Badge>
-      );
-    } else {
-      return (
-        <Badge className="bg-red-100 text-red-800 hover:bg-red-100">
-          Failed
-        </Badge>
-      );
-    }
-  };
-
   const formatAmount = (amount: string) => {
     const numAmount = parseFloat(amount);
     return new Intl.NumberFormat("en-US", {
@@ -60,279 +42,341 @@ export default function TransactionDetails({
   };
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 p-6">
       <div className="mx-auto max-w-4xl space-y-6">
-        {/* Transaction Overview */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl">Transaction Overview</CardTitle>
-                <CardDescription>
-                  Transaction ID: {transaction.transactionid}
-                </CardDescription>
-              </div>
-              {getStatusBadge(transaction.description1)}
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Amount
-                </label>
-                <p className="text-2xl font-bold text-gray-900">
-                  {formatAmount(transaction.amount)}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Type
-                </label>
-                <p className="text-lg font-semibold capitalize text-gray-900">
-                  {transaction.transactiontype}
-                </p>
+        {/* Clean Header */}
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                  <Receipt className="h-5 w-5" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    Transaction Details
+                  </h1>
+                  <p className="text-gray-600">
+                    ID: {transaction.transactionid}
+                  </p>
+                </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="flex items-center space-x-3">
+              <Button variant="outline" size="sm">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back
+              </Button>
+            </div>
+          </div>
+        </div>
 
-        {/* Transaction Details */}
-        <Card>
+        {/* Essential Transaction Info */}
+        <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle>Transaction Details</CardTitle>
-            <CardDescription>Complete transaction information</CardDescription>
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              Transaction Information
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Merchant Code
-                  </label>
-                  <p className="text-gray-900">{transaction.merchantcode}</p>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="flex items-center space-x-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                  <DollarSign className="h-4 w-4" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Bank Code
-                  </label>
-                  <p className="text-gray-900">{transaction.bankcode}</p>
+                  <p className="text-sm font-medium text-gray-600">Amount</p>
+                  <p className="text-xl font-bold text-gray-900">
+                    {formatAmount(transaction.amount)}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                  <CreditCard className="h-4 w-4" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Short Code
-                  </label>
-                  <p className="text-gray-900">{transaction.shortcode}</p>
+                  <p className="text-sm font-medium text-gray-600">Type</p>
+                  <p className="font-semibold text-gray-900">
+                    {transaction.transactiontype}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                  <Hash className="h-4 w-4" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Transaction Method
-                  </label>
-                  <p className="text-gray-900">
+                  <p className="text-sm font-medium text-gray-600">Method</p>
+                  <p className="font-semibold text-gray-900">
                     {transaction.transactionmethod}
                   </p>
                 </div>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Reference
-                  </label>
-                  <p className="text-gray-900">{transaction.reference}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Essential Details */}
+        <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              Transaction Details
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Hash className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Reference
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.reference}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Reference 1
-                  </label>
-                  <p className="text-gray-900">{transaction.reference1}</p>
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <CreditCard className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Bank Code
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.bankcode}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Negotiated Reference
-                  </label>
-                  <p className="text-gray-900">
-                    {transaction.negotiatedreference}
-                  </p>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Receipt className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Narration
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.narration}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Checkout Request ID
-                  </label>
-                  <p className="text-gray-900">
-                    {transaction.checkoutrequestid}
-                  </p>
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Hash className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Short Code
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.shortcode}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Customer Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Customer Information</CardTitle>
-            <CardDescription>Customer and account details</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Phone Number
-                  </label>
-                  <p className="text-gray-900">{transaction.msisdn}</p>
+        {/* Customer Information - Only if available */}
+        {(transaction.msisdn ||
+          transaction.firstname ||
+          transaction.lastname ||
+          transaction.account) && (
+          <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-900">
+                Customer Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="space-y-3">
+                  {transaction.msisdn && (
+                    <div className="flex items-center space-x-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                        <Phone className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">
+                          Phone Number
+                        </p>
+                        <p className="font-semibold text-gray-900">
+                          {transaction.msisdn}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {transaction.firstname && (
+                    <div className="flex items-center space-x-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                        <User className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">
+                          First Name
+                        </p>
+                        <p className="font-semibold text-gray-900">
+                          {transaction.firstname}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    First Name
-                  </label>
-                  <p className="text-gray-900">
-                    {transaction.firstname || "N/A"}
-                  </p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Last Name
-                  </label>
-                  <p className="text-gray-900">
-                    {transaction.lastname || "N/A"}
-                  </p>
+                <div className="space-y-3">
+                  {transaction.lastname && (
+                    <div className="flex items-center space-x-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                        <User className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">
+                          Last Name
+                        </p>
+                        <p className="font-semibold text-gray-900">
+                          {transaction.lastname}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {transaction.account && (
+                    <div className="flex items-center space-x-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                        <CreditCard className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">
+                          Account
+                        </p>
+                        <p className="font-semibold text-gray-900">
+                          {transaction.account}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Account
-                  </label>
-                  <p className="text-gray-900">{transaction.account}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Account Balance
-                  </label>
-                  <p className="text-gray-900">
-                    {formatAmount(transaction.accbalance)}
-                  </p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Transaction Cost
-                  </label>
-                  <p className="text-gray-900">
-                    {transaction.transactioncost || "N/A"}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Transaction Timeline */}
-        <Card>
+        <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle>Transaction Timeline</CardTitle>
-            <CardDescription>Transaction dates and timestamps</CardDescription>
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              Transaction Timeline
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Transaction Date
-                  </label>
-                  <p className="text-gray-900">{transaction.transactiondate}</p>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Calendar className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Transaction Date
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.transactiondate}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Transaction Time
-                  </label>
-                  <p className="text-gray-900">{transaction.transactiontime}</p>
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Clock className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Transaction Time
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.transactiontime}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Created On
-                  </label>
-                  <p className="text-gray-900">
-                    {formatDate(transaction.createdon)}
-                  </p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Created By
-                  </label>
-                  <p className="text-gray-900">{transaction.createdby}</p>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Calendar className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Created On
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {formatDate(transaction.createdon)}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Response Information */}
-        <Card>
+        {/* Status Information - Only essential */}
+        <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle>Response Information</CardTitle>
-            <CardDescription>API responses and descriptions</CardDescription>
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              Status Information
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Response 1
-                  </label>
-                  <p className="text-gray-900">{transaction.response1}</p>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Receipt className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Status Description
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.description1}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Description 1
-                  </label>
-                  <p className="text-gray-900">{transaction.description1}</p>
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Hash className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Response Code
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.response1}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Response 2
-                  </label>
-                  <p className="text-gray-900">
-                    {transaction.response2 || "N/A"}
-                  </p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">
-                    Description 2
-                  </label>
-                  <p className="text-gray-900">
-                    {transaction.description2 || "N/A"}
-                  </p>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                    <Receipt className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      IPN Sent
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {transaction.ipnsent}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-            <Separator />
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Narration
-              </label>
-              <p className="text-gray-900">{transaction.narration}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                IPN Sent
-              </label>
-              <p className="text-gray-900">{transaction.ipnsent}</p>
-            </div>
-            {transaction.callbackurl && (
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Callback URL
-                </label>
-                <p className="break-all text-gray-900">
-                  {transaction.callbackurl}
-                </p>
-              </div>
-            )}
           </CardContent>
         </Card>
       </div>

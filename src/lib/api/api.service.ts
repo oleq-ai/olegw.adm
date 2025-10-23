@@ -89,7 +89,17 @@ export class Fetcher {
 
         const resp = response?.data;
 
-        if (!resp || isEmpty(resp)) throw new Error("Resource not found.");
+        // Special handling for merchant API that might return [{}]
+        if (requestOptions.data?.operation === "getmerchant") {
+          if (
+            !resp ||
+            (Array.isArray(resp) && resp.length === 1 && isEmpty(resp[0]))
+          ) {
+            throw new Error("Merchant not found");
+          }
+        } else {
+          if (!resp || isEmpty(resp)) throw new Error("Resource not found.");
+        }
 
         if (resp.status && resp.status !== 200)
           throw new Error(resp.message || "An error occurred");

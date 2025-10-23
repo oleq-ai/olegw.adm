@@ -4,18 +4,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import {
   Calendar,
-  CheckCircle,
-  Clock,
   CreditCard,
   Download,
   Eye,
   MoreHorizontal,
+  Receipt,
   RefreshCw,
   User,
   XCircle,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -70,45 +68,14 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
     header: "Status",
     cell: ({ row }) => {
       const description = row.getValue("description1") as string;
-
-      const getStatusBadge = (description: string) => {
-        if (description.toLowerCase().includes("success")) {
-          return (
-            <div className="flex items-center space-x-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100">
-                <CheckCircle className="h-3 w-3 text-green-600" />
-              </div>
-              <Badge className="bg-green-100 font-semibold text-green-800 hover:bg-green-100">
-                Completed
-              </Badge>
-            </div>
-          );
-        } else if (description.toLowerCase().includes("pending")) {
-          return (
-            <div className="flex items-center space-x-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-100">
-                <Clock className="h-3 w-3 text-yellow-600" />
-              </div>
-              <Badge className="bg-yellow-100 font-semibold text-yellow-800 hover:bg-yellow-100">
-                Pending
-              </Badge>
-            </div>
-          );
-        } else {
-          return (
-            <div className="flex items-center space-x-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100">
-                <XCircle className="h-3 w-3 text-red-600" />
-              </div>
-              <Badge className="bg-red-100 font-semibold text-red-800 hover:bg-red-100">
-                Failed
-              </Badge>
-            </div>
-          );
-        }
-      };
-
-      return getStatusBadge(description);
+      return (
+        <div className="flex items-center space-x-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+            <Receipt className="h-3 w-3" />
+          </div>
+          <span className="font-medium text-gray-900">{description}</span>
+        </div>
+      );
     },
   },
   {
@@ -118,12 +85,10 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
       const type = row.getValue("transactiontype") as string;
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
             <CreditCard className="h-3 w-3" />
           </div>
-          <Badge variant="outline" className="font-semibold">
-            {type}
-          </Badge>
+          <span className="font-semibold text-gray-900">{type}</span>
         </div>
       );
     },
@@ -212,13 +177,13 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
               <span>Copy transaction ID</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {transaction.status === "pending" && (
+            {transaction.description1?.toLowerCase().includes("pending") && (
               <DropdownMenuItem className="flex items-center space-x-2 text-yellow-600">
                 <XCircle className="h-4 w-4" />
                 <span>Cancel transaction</span>
               </DropdownMenuItem>
             )}
-            {transaction.status === "failed" && (
+            {transaction.description1?.toLowerCase().includes("failed") && (
               <DropdownMenuItem className="flex items-center space-x-2 text-green-600">
                 <RefreshCw className="h-4 w-4" />
                 <span>Retry transaction</span>

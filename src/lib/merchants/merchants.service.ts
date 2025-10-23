@@ -43,6 +43,14 @@ export class MerchantService {
         },
       });
 
+      // Check if the response has the required fields
+      if (!res.merchantid || !res.name) {
+        return {
+          success: false,
+          error: "Merchant not found",
+        };
+      }
+
       const merchantDetails: MerchantDetails = {
         merchantid: res.merchantid,
         merchantcode: res.merchantcode,
