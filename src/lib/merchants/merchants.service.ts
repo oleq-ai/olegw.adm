@@ -2,6 +2,7 @@ import "server-only";
 
 import { Fetcher } from "../api/api.service";
 import { Response } from "../shared/types";
+import { SaveMerchantDto, SaveMerchantResponse } from "./dto/merchant.dto";
 import {
   MerchantDetails,
   MerchantDetailsResponse,
@@ -87,6 +88,53 @@ export class MerchantService {
           error instanceof Error
             ? error.message
             : "Failed to fetch merchant details",
+      };
+    }
+  }
+
+  async saveMerchant(
+    merchantData: SaveMerchantDto
+  ): Promise<Response<SaveMerchantResponse>> {
+    try {
+      const res = await this.fetcher.request<SaveMerchantResponse>("/", {
+        data: {
+          operation: "savemerchant",
+          ...merchantData,
+        },
+      });
+
+      return { success: true, data: res };
+    } catch (error) {
+      return {
+        success: false,
+        error:
+          error instanceof Error ? error.message : "Failed to save merchant",
+      };
+    }
+  }
+
+  async deleteMerchant(
+    merchantid: string
+  ): Promise<Response<{ message: string }>> {
+    try {
+      // For delete, we'll use savemerchant with active: "0" and the merchantid
+      await this.fetcher.request<SaveMerchantResponse>("/", {
+        data: {
+          operation: "savemerchant",
+          merchantid,
+          active: "0", // Set to inactive instead of actual deletion
+        },
+      });
+
+      return {
+        success: true,
+        data: { message: "Merchant deactivated successfully" },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error:
+          error instanceof Error ? error.message : "Failed to delete merchant",
       };
     }
   }

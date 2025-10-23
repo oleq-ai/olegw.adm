@@ -127,6 +127,7 @@ export default function MerchantsTable() {
                 <Button
                   size="sm"
                   className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                  onClick={() => router.push("/merchants/create")}
                 >
                   <Plus className="mr-2 h-4 w-4" />
                   Add Merchant
