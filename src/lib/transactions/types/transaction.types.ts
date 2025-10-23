@@ -35,7 +35,18 @@ export interface Transaction {
   usercode: string;
 }
 
+export interface TransactionPagination {
+  totalrecords: number;
+  currentpage: number;
+  pagesize: number;
+  totalpages: number;
+  hasnextpage: boolean;
+  haspreviouspage: boolean;
+}
+
 export interface TransactionResponse {
   status: number;
   data: Transaction[];
+  message: string;
+  pagination: TransactionPagination;
 }

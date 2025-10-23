@@ -37,25 +37,30 @@ export class TransactionService {
     return { data, meta };
   }
 
-  async getPendingTransactions(): Promise<PaginatedResponse<Transaction>> {
-    await this.fetcher.request<Record<string, never>>("/", {
+  async getPendingTransactions(
+    startDate?: string,
+    endDate?: string,
+    page: number = 1,
+    pageSize: number = 30
+  ): Promise<PaginatedResponse<Transaction>> {
+    const res = await this.fetcher.request<TransactionResponse>("/", {
       data: {
-        operation: "getpendingtransaction",
-        transactionid: "",
+        operation: "getpendingtransactions",
+        startdate: startDate || "",
+        enddate: endDate || "",
+        pagenumber: page.toString(),
+        pagesize: pageSize.toString(),
       },
     });
 
-    // Handle empty response format
-    const data: Transaction[] = [];
-    const totalrows = 0;
-
-    const pageCount = Math.ceil(Number(totalrows) / 10);
+    const data = res.data || [];
+    const pagination = res.pagination;
 
     const meta: Meta = {
-      pageCount,
-      currentPage: 1,
-      itemCount: totalrows,
-      pageSize: 10,
+      pageCount: pagination.totalpages,
+      currentPage: pagination.currentpage,
+      itemCount: pagination.totalrecords,
+      pageSize: pagination.pagesize,
     };
     return { data, meta };
   }

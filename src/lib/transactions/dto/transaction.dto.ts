@@ -3,4 +3,6 @@ export interface TransactionQuery {
   pageSize?: number;
   search?: string;
   status?: string;
+  startdate?: string;
+  enddate?: string;
 }

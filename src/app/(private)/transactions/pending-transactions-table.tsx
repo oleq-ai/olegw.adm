@@ -22,7 +22,12 @@ export default function PendingTransactionsTable() {
   const { data, error, isError, isLoading, isRefetching } = useQuery({
     queryKey: [TAGS.TRANSACTION, "pending", { page, pageSize, filter }],
     queryFn: async () => {
-      const res = await getPendingTransactionsAction();
+      const res = await getPendingTransactionsAction(
+        undefined, // startDate
+        undefined, // endDate
+        parseInt(page),
+        parseInt(pageSize)
+      );
       if (!res.success) throw new Error(res.error);
       return res.data;
     },

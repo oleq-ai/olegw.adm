@@ -24,6 +24,7 @@ export type FetcherOperationType =
   | "querypayment"
   | "gettransactions"
   | "getpendingtransaction"
+  | "getpendingtransactions"
   | "getfailedtransaction"
   | "getcompletedtransaction"
   | "getcompletedtransactions"
