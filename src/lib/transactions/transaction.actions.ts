@@ -38,11 +38,19 @@ export async function getPendingTransactionsAction(
   }
 }
 
-export async function getFailedTransactionsAction(): Promise<
-  Response<PaginatedResponse<Transaction>>
-> {
+export async function getFailedTransactionsAction(
+  startDate?: string,
+  endDate?: string,
+  page: number = 1,
+  pageSize: number = 20
+): Promise<Response<PaginatedResponse<Transaction>>> {
   try {
-    const res = await transactionService.getFailedTransactions();
+    const res = await transactionService.getFailedTransactions(
+      startDate,
+      endDate,
+      page,
+      pageSize
+    );
     return { success: true, data: res };
   } catch (error) {
     return { success: false, error: getErrorMessage(error) };

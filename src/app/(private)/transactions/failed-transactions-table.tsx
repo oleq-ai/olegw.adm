@@ -22,7 +22,12 @@ export default function FailedTransactionsTable() {
   const { data, error, isError, isLoading, isRefetching } = useQuery({
     queryKey: [TAGS.TRANSACTION, "failed", { page, pageSize, filter }],
     queryFn: async () => {
-      const res = await getFailedTransactionsAction();
+      const res = await getFailedTransactionsAction(
+        undefined, // startDate
+        undefined, // endDate
+        parseInt(page),
+        parseInt(pageSize)
+      );
       if (!res.success) throw new Error(res.error);
       return res.data;
     },
