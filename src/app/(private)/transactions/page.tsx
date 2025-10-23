@@ -2,16 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import {
-  Activity,
-  ArrowDownRight,
-  ArrowUpRight,
-  CheckCircle,
-  Clock,
-  Loader2,
-  TrendingUp,
-  XCircle,
-} from "lucide-react";
+import { Activity, CheckCircle, Clock, Loader2, XCircle } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -119,18 +110,8 @@ export default function TransactionsPage() {
                         stats.completed.toLocaleString()
                       )}
                     </p>
-                    <div className="flex items-center text-xs text-green-600">
-                      <ArrowUpRight className="mr-1 h-3 w-3" />
-                      Successfully processed
-                    </div>
                   </div>
                 </div>
-                <Badge
-                  variant="secondary"
-                  className="bg-green-100 text-green-700"
-                >
-                  Success
-                </Badge>
               </div>
             </CardContent>
           </Card>
@@ -153,18 +134,8 @@ export default function TransactionsPage() {
                         stats.pending.toLocaleString()
                       )}
                     </p>
-                    <div className="flex items-center text-xs text-yellow-600">
-                      <TrendingUp className="mr-1 h-3 w-3" />
-                      Processing
-                    </div>
                   </div>
                 </div>
-                <Badge
-                  variant="secondary"
-                  className="bg-yellow-100 text-yellow-700"
-                >
-                  In Progress
-                </Badge>
               </div>
             </CardContent>
           </Card>
@@ -187,15 +158,8 @@ export default function TransactionsPage() {
                         stats.failed.toLocaleString()
                       )}
                     </p>
-                    <div className="flex items-center text-xs text-red-600">
-                      <ArrowDownRight className="mr-1 h-3 w-3" />
-                      Requires attention
-                    </div>
                   </div>
                 </div>
-                <Badge variant="secondary" className="bg-red-100 text-red-700">
-                  Failed
-                </Badge>
               </div>
             </CardContent>
           </Card>

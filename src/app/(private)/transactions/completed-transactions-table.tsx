@@ -141,12 +141,6 @@ export default function CompletedTransactionsTable() {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Badge
-                  variant="secondary"
-                  className="bg-green-100 text-green-700"
-                >
-                  {data?.meta.itemCount || 0} transactions
-                </Badge>
                 <TransactionDateFilter
                   onDateChange={handleDateChange}
                   startDate={startDate}

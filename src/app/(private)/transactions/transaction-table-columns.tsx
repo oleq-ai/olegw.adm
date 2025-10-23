@@ -33,10 +33,10 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
       const transactionId = row.getValue("transactionid") as string;
       return (
         <div className="group flex items-center space-x-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-xs font-bold text-gray-600">
             {transactionId.slice(-2)}
           </div>
-          <div className="cursor-pointer font-mono text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800">
+          <div className="cursor-pointer font-mono text-sm font-semibold text-gray-900 transition-colors hover:text-gray-700">
             {transactionId}
           </div>
         </div>
@@ -55,7 +55,7 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
 
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
             <CreditCard className="h-4 w-4" />
           </div>
           <div className="font-bold text-gray-900">{formatted}</div>
@@ -100,7 +100,7 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
       const merchantCode = row.getValue("merchantcode") as string;
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 text-xs font-bold text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-600">
             {merchantCode.slice(0, 2).toUpperCase()}
           </div>
           <div className="font-semibold text-gray-900">{merchantCode}</div>
@@ -115,7 +115,7 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
       const phone = row.getValue("msisdn") as string;
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-teal-600 text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 text-gray-600">
             <User className="h-3 w-3" />
           </div>
           <div className="font-mono text-sm text-gray-600">{phone}</div>
@@ -130,7 +130,7 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
       const date = new Date(row.getValue("createdon"));
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-600 text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 text-gray-600">
             <Calendar className="h-3 w-3" />
           </div>
           <div className="text-sm text-gray-600">
