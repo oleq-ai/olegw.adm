@@ -4,6 +4,10 @@ import { getErrorMessage } from "../get-error-message";
 import { Response } from "../shared/types";
 import { SaveMerchantDto, SaveMerchantResponse } from "./dto/merchant.dto";
 import { MerchantService } from "./merchants.service";
+import {
+  MerchantPerformanceData,
+  MerchantPerformanceQuery,
+} from "./types/merchant-performance.types";
 import { Merchant, MerchantDetails } from "./types/merchant.types";
 
 const merchantService = new MerchantService();
@@ -45,6 +49,17 @@ export async function deleteMerchantAction(
 ): Promise<Response<{ message: string }>> {
   try {
     const res = await merchantService.deleteMerchant(merchantid);
+    return res;
+  } catch (error) {
+    return { success: false, error: getErrorMessage(error) };
+  }
+}
+
+export async function getMerchantPerformanceAction(
+  query: MerchantPerformanceQuery
+): Promise<Response<MerchantPerformanceData>> {
+  try {
+    const res = await merchantService.getMerchantPerformance(query);
     return res;
   } catch (error) {
     return { success: false, error: getErrorMessage(error) };

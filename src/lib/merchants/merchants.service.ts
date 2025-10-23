@@ -4,6 +4,11 @@ import { Fetcher } from "../api/api.service";
 import { Response } from "../shared/types";
 import { SaveMerchantDto, SaveMerchantResponse } from "./dto/merchant.dto";
 import {
+  MerchantPerformanceData,
+  MerchantPerformanceQuery,
+  MerchantPerformanceResponse,
+} from "./types/merchant-performance.types";
+import {
   MerchantDetails,
   MerchantDetailsResponse,
 } from "./types/merchant.types";
@@ -135,6 +140,29 @@ export class MerchantService {
         success: false,
         error:
           error instanceof Error ? error.message : "Failed to delete merchant",
+      };
+    }
+  }
+
+  async getMerchantPerformance(
+    query: MerchantPerformanceQuery
+  ): Promise<Response<MerchantPerformanceData>> {
+    try {
+      const res = await this.fetcher.request<MerchantPerformanceResponse>("/", {
+        data: {
+          operation: "getmerchantperformance",
+          ...query,
+        },
+      });
+
+      return { success: true, data: res.data };
+    } catch (error) {
+      return {
+        success: false,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch merchant performance",
       };
     }
   }

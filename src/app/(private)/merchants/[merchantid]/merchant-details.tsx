@@ -1,8 +1,11 @@
 "use client";
 
+import Link from "next/link";
+
 import { format } from "date-fns";
 import {
   ArrowLeft,
+  BarChart3,
   Building2,
   Calendar,
   Mail,
@@ -43,6 +46,12 @@ export default function MerchantDetails({ merchant }: MerchantDetailsProps) {
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              <Link href={`/merchants/${merchant.merchantid}/performance`}>
+                <Button variant="outline" size="sm">
+                  <BarChart3 className="mr-2 h-4 w-4" />
+                  View Performance
+                </Button>
+              </Link>
               <Button variant="outline" size="sm">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back
