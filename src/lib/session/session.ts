@@ -49,17 +49,22 @@ export async function createSession(payload: Session) {
   const sessionStore = await SessionStore.create(SESSION_OPTIONS.NAME);
   const chunks = sessionStore.chunk(session);
 
-  const cookieStore = await cookies();
-  Object.entries(chunks).forEach(([name, value]) => {
-    cookieStore.set(name, value, {
-      httpOnly: SESSION_OPTIONS.HTTP_ONLY,
-      secure: SESSION_OPTIONS.SECURE,
-      // expires: SESSION_OPTIONS.EXPIRES,
-      maxAge: SESSION_OPTIONS.ONE_DAY_S,
-      sameSite: SESSION_OPTIONS.SAME_SITE,
-      path: SESSION_OPTIONS.PATH,
+  try {
+    const cookieStore = await cookies();
+    Object.entries(chunks).forEach(([name, value]) => {
+      cookieStore.set(name, value, {
+        httpOnly: SESSION_OPTIONS.HTTP_ONLY,
+        secure: SESSION_OPTIONS.SECURE,
+        // expires: SESSION_OPTIONS.EXPIRES,
+        maxAge: SESSION_OPTIONS.ONE_DAY_S,
+        sameSite: SESSION_OPTIONS.SAME_SITE,
+        path: SESSION_OPTIONS.PATH,
+      });
     });
-  });
+  } catch {
+    // Handle static export mode where cookies are not available
+    // console.warn("Cookies not available in static export mode");
+  }
 }
 
 export async function destroySession() {
@@ -68,11 +73,20 @@ export async function destroySession() {
 }
 
 export async function getStoredSession(cookie?: NextRequest["cookies"]) {
-  const sessionStore = await SessionStore.create(SESSION_OPTIONS.NAME, cookie);
-  const session = await decrypt<Session>(sessionStore.value);
-  if (!session) return null;
+  try {
+    const sessionStore = await SessionStore.create(
+      SESSION_OPTIONS.NAME,
+      cookie
+    );
+    const session = await decrypt<Session>(sessionStore.value);
+    if (!session) return null;
 
-  return session;
+    return session;
+  } catch {
+    // Handle static export mode where cookies are not available
+    // console.warn("Session not available in static export mode");
+    return null;
+  }
 }
 
 export async function getSession(cookie?: NextRequest["cookies"]) {

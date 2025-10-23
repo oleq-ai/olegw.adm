@@ -55,3 +55,14 @@ export async function getCompletedTransactionsAction(
     return { success: false, error: getErrorMessage(error) };
   }
 }
+
+export async function getTransactionAction(
+  transactionId: string
+): Promise<Response<Transaction>> {
+  try {
+    const res = await transactionService.getTransaction(transactionId);
+    return { success: true, data: res };
+  } catch (error) {
+    return { success: false, error: getErrorMessage(error) };
+  }
+}

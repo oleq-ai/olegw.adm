@@ -21,9 +21,10 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
     accessorKey: "transactionid",
     header: "Transaction ID",
     cell: ({ row }) => {
+      const transactionId = row.getValue("transactionid") as string;
       return (
-        <div className="font-medium text-gray-900">
-          {row.getValue("transactionid")}
+        <div className="cursor-pointer font-medium text-blue-600 hover:text-blue-800">
+          {transactionId}
         </div>
       );
     },

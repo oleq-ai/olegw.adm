@@ -108,4 +108,15 @@ export class TransactionService {
     };
     return { data, meta };
   }
+
+  async getTransaction(transactionId: string): Promise<Transaction> {
+    const res = await this.fetcher.request<Transaction>("/", {
+      data: {
+        operation: "gettransaction",
+        transactionid: transactionId,
+      },
+    });
+
+    return res;
+  }
 }
