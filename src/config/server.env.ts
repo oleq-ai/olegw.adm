@@ -13,6 +13,10 @@ const env = createEnv({
     AUTH_SECRET: z.string(),
     API_URL: z.string(),
     AUTO_LOGIN: z.string().optional(),
+    SSL_VERIFY: z
+      .string()
+      .default("true")
+      .transform((val) => val === "true"),
   },
   // onValidationError: (error: ZodError) => {
   //   // eslint-disable-next-line no-console

@@ -25,7 +25,8 @@ export type FetcherOperationType =
   | "gettransactions"
   | "getpendingtransaction"
   | "getfailedtransaction"
-  | "getcompletedtransaction";
+  | "getcompletedtransaction"
+  | "getcompletedtransactions";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RequestOptions<TData = Record<string, any>> = {

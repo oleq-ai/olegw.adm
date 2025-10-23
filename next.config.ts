@@ -11,7 +11,12 @@ import { withBetterStack } from "@logtail/next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
-  output: "standalone",
+  // Use export for Windows to avoid symlink issues
+  output: process.platform === "win32" ? "export" : "standalone",
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default withBetterStack(nextConfig);

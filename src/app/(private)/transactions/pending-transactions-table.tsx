@@ -36,7 +36,9 @@ export default function PendingTransactionsTable() {
       isFetching={isLoading}
       isRefetching={isRefetching}
       pageCount={data?.meta.pageCount}
-      onRowClick={({ id }) => router.push(`/transactions/${id}`)}
+      onRowClick={({ transactionid }) =>
+        router.push(`/transactions/${transactionid}`)
+      }
     />
   );
 }

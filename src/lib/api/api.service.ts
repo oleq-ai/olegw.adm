@@ -3,6 +3,7 @@ import "server-only";
 import { cache } from "react";
 
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import https from "https";
 import isEmpty from "lodash.isempty";
 import { createHash } from "node:crypto";
 
@@ -13,7 +14,18 @@ import { Logger } from "../shared/logger";
 import { RequestOptions } from "./api.type";
 
 export class Fetcher {
-  constructor(private apiUri = axios.create({ baseURL: env.API_URL })) {}
+  private apiUri: ReturnType<typeof axios.create>;
+
+  constructor(apiUri?: ReturnType<typeof axios.create>) {
+    this.apiUri =
+      apiUri ||
+      axios.create({
+        baseURL: env.API_URL,
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: env.SSL_VERIFY,
+        }),
+      });
+  }
 
   private logger = new Logger("API Service");
 
@@ -73,15 +85,13 @@ export class Fetcher {
 
         this.logger.info("request", requestOptions);
 
-        const response = await this.apiUri.request<T>(requestOptions);
+        const response = await this.apiUri.request(requestOptions);
 
         const resp = response?.data;
 
         if (!resp || isEmpty(resp)) throw new Error("Resource not found.");
 
-        // @ts-expect-error If the response is not 200, it will throw an error
         if (resp.status && resp.status !== 200)
-          // @ts-expect-error If the response is not 200, it will throw an error
           throw new Error(resp.message || "An error occurred");
 
         this.logger.info("response", resp);

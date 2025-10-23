@@ -41,11 +41,15 @@ export async function getFailedTransactionsAction(): Promise<
   }
 }
 
-export async function getCompletedTransactionsAction(): Promise<
-  Response<PaginatedResponse<Transaction>>
-> {
+export async function getCompletedTransactionsAction(
+  startDate?: string,
+  endDate?: string
+): Promise<Response<PaginatedResponse<Transaction>>> {
   try {
-    const res = await transactionService.getCompletedTransactions();
+    const res = await transactionService.getCompletedTransactions(
+      startDate,
+      endDate
+    );
     return { success: true, data: res };
   } catch (error) {
     return { success: false, error: getErrorMessage(error) };

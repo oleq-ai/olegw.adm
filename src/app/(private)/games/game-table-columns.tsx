@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Game } from "@/lib/games/types/game.types";
@@ -10,7 +12,7 @@ export const GameTableColumns: ColumnDef<Game>[] = [
     header: "Banner",
     accessorKey: "gamedata.banner",
     cell: ({ row: { original } }) => (
-      <img
+      <Image
         src={original.gamedata.banner}
         alt="Banner"
         width={80}

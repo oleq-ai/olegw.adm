@@ -3,7 +3,7 @@ import "server-only";
 import { Fetcher } from "../api/api.service";
 import { Meta, PaginatedResponse } from "../shared/types";
 import { TransactionQuery } from "./dto/transaction.dto";
-import { Transaction } from "./types/transaction.types";
+import { Transaction, TransactionResponse } from "./types/transaction.types";
 
 export class TransactionService {
   constructor(private fetcher = new Fetcher()) {}
@@ -83,17 +83,20 @@ export class TransactionService {
     return { data, meta };
   }
 
-  async getCompletedTransactions(): Promise<PaginatedResponse<Transaction>> {
-    await this.fetcher.request<Record<string, never>>("/", {
+  async getCompletedTransactions(
+    startDate?: string,
+    endDate?: string
+  ): Promise<PaginatedResponse<Transaction>> {
+    const res = await this.fetcher.request<TransactionResponse>("/", {
       data: {
-        operation: "getcompletedtransaction",
-        transactionid: "",
+        operation: "getcompletedtransactions",
+        startdate: startDate || "",
+        enddate: endDate || "",
       },
     });
 
-    // Handle empty response format
-    const data: Transaction[] = [];
-    const totalrows = 0;
+    const data = res.data || [];
+    const totalrows = data.length;
 
     const pageCount = Math.ceil(Number(totalrows) / 10);
 

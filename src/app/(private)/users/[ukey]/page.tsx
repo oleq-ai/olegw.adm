@@ -8,6 +8,13 @@ import { getUserActions } from "@/lib/users/user.actions";
 
 import CreateUserForm from "../create/create-user-form";
 
+// Generate static params for export mode
+export async function generateStaticParams() {
+  // Return empty array for dynamic routes in export mode
+  // The actual pages will be generated at runtime
+  return [];
+}
+
 type Props = {
   params: Promise<{ ukey: string }>;
 };

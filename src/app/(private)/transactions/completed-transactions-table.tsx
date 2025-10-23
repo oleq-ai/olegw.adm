@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 
@@ -9,6 +10,7 @@ import useUpdateSearchParams from "@/hooks/use-update-search-params";
 import { TAGS } from "@/lib/shared/constants";
 import { getCompletedTransactionsAction } from "@/lib/transactions/transaction.actions";
 
+import TransactionDateFilter from "./transaction-date-filter";
 import { TransactionTableColumns } from "./transaction-table-columns";
 
 export default function CompletedTransactionsTable() {
@@ -19,24 +21,48 @@ export default function CompletedTransactionsTable() {
   const pageSize = searchParams.pageSize ?? "10";
   const filter = searchParams.s ?? "";
 
+  const [startDate, setStartDate] = useState<string | undefined>();
+  const [endDate, setEndDate] = useState<string | undefined>();
+
   const { data, error, isError, isLoading, isRefetching } = useQuery({
-    queryKey: [TAGS.TRANSACTION, "completed", { page, pageSize, filter }],
+    queryKey: [
+      TAGS.TRANSACTION,
+      "completed",
+      { page, pageSize, filter, startDate, endDate },
+    ],
     queryFn: async () => {
-      const res = await getCompletedTransactionsAction();
+      const res = await getCompletedTransactionsAction(startDate, endDate);
       if (!res.success) throw new Error(res.error);
       return res.data;
     },
   });
 
+  const handleDateChange = (start?: string, end?: string) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
+
   return (
-    <DataTable
-      columns={TransactionTableColumns}
-      data={data?.data ?? []}
-      error={isError ? error : undefined}
-      isFetching={isLoading}
-      isRefetching={isRefetching}
-      pageCount={data?.meta.pageCount}
-      onRowClick={({ id }) => router.push(`/transactions/${id}`)}
-    />
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold">Completed Transactions</h3>
+        <TransactionDateFilter
+          onDateChange={handleDateChange}
+          startDate={startDate}
+          endDate={endDate}
+        />
+      </div>
+      <DataTable
+        columns={TransactionTableColumns}
+        data={data?.data ?? []}
+        error={isError ? error : undefined}
+        isFetching={isLoading}
+        isRefetching={isRefetching}
+        pageCount={data?.meta.pageCount}
+        onRowClick={({ transactionid }) =>
+          router.push(`/transactions/${transactionid}`)
+        }
+      />
+    </div>
   );
 }

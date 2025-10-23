@@ -1,25 +1,41 @@
 export interface Transaction {
   id: string;
-  amount: number;
-  currency: string;
-  status: "completed" | "pending" | "failed";
-  type: "payment" | "refund" | "withdrawal" | "deposit";
-  merchant: string;
-  customer: string;
-  createdAt: string;
-  completedAt: string | null;
-  failureReason?: string;
-  errorCode?: string;
-  // API-specific fields
-  reference?: string;
-  ukey?: string;
-  countrycode?: string;
-  operation?: string;
-  transactionid?: string;
+  transactionid: string;
+  merchantid: string;
+  merchantcode: string;
+  bankcode: string;
+  shortcode: string;
+  transactionmethod: string;
+  transactiontype: string;
+  reference: string;
+  reference1: string;
+  negotiatedreference: string;
+  msisdn: string;
+  firstname: string;
+  lastname: string;
+  account: string;
+  amount: string;
+  accbalance: string;
+  transactioncost: string;
+  narration: string;
+  response1: string;
+  description1: string;
+  checkoutrequestid: string;
+  merchantrequestid: string;
+  response2: string;
+  description2: string;
+  transactiondate: string;
+  transactiontime: string;
+  createdon: string;
+  createdby: string;
+  ipnsent: string;
+  status: string;
+  message: string;
+  callbackurl: string;
+  usercode: string;
 }
 
 export interface TransactionResponse {
   status: number;
-  message: string;
   data: Transaction[];
 }
