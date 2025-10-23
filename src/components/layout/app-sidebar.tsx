@@ -40,6 +40,7 @@ export async function AppSidebar({ user, ...props }: Props) {
       collapsible="icon"
       variant="floating"
       {...props}
+      className="border-r border-sidebar-border"
       style={{
         backgroundColor: "hsl(240 5.9% 10%)",
         color: "hsl(0 0% 98%)",
@@ -50,13 +51,14 @@ export async function AppSidebar({ user, ...props }: Props) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" className="relative p-0">
               <div className="flex items-center space-x-3">
-                <div className="relative h-8 w-8 flex-shrink-0 rounded-lg bg-blue-600 p-1.5">
+                <div className="relative h-8 w-8 flex-shrink-0 rounded-lg bg-gradient-to-br from-purple-600 to-purple-800 p-1.5">
                   <svg
                     className="h-5 w-5 text-white"
                     fill="currentColor"
                     viewBox="0 0 24 24"
+                    style={{ fill: "currentColor" }}
                   >
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    <path d="M4 6h16v2H4V6zm0 4h16v2H4v-2zm0 4h16v2H4v-2zm0 4h16v2H4v-2zM6 8h2v8H6V8zm10 0h2v8h-2V8z" />
                   </svg>
                 </div>
                 <div className="flex flex-col items-start">
@@ -82,7 +84,7 @@ export async function AppSidebar({ user, ...props }: Props) {
 
       <SidebarContent className="overflow-y-auto px-4 py-6 pr-2">
         {filteredNavGroups.map((group, groupIndex) => (
-          <div key={group.title} className={cn(groupIndex > 0 && "mt-4")}>
+          <div key={group.title} className={cn(groupIndex > 0 && "mt-2")}>
             <NavGroup {...group} />
           </div>
         ))}

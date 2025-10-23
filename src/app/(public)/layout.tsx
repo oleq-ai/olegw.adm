@@ -2,8 +2,6 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { ReactNode } from "react";
 
-import { Shield } from "lucide-react";
-
 import { siteConfig } from "@/config/site.config";
 
 export const metadata: Metadata = {
@@ -40,7 +38,13 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             </div>
 
             <div className="flex items-center gap-2 rounded-full border border-border/50 bg-background/50 px-4 py-1.5 backdrop-blur-sm">
-              <Shield className="h-3.5 w-3.5 text-primary" />
+              <svg
+                className="h-3.5 w-3.5 text-purple-600"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M4 6h16v2H4V6zm0 4h16v2H4v-2zm0 4h16v2H4v-2zm0 4h16v2H4v-2zM6 8h2v8H6V8zm10 0h2v8h-2V8z" />
+              </svg>
               <span className="text-sm font-medium text-muted-foreground">
                 Admin Portal
               </span>

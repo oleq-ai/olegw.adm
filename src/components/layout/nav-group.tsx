@@ -124,7 +124,7 @@ export function NavGroup({ title, items }: NavGroup) {
       <SidebarGroupLabel className="mb-2 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/70">
         {title}
       </SidebarGroupLabel>
-      <SidebarMenu className="space-y-0.5">
+      <SidebarMenu className="space-y-0">
         {items.map((item) => {
           const key = `${item.title}-${item.url}`;
 

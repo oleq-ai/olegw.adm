@@ -10,7 +10,7 @@ import { getSession } from "@/lib/session/session";
 import UsersTable from "./users-table";
 
 export const metadata: Metadata = {
-  title: "Merchants",
+  title: "Users",
 };
 
 export default async function UsersPage() {
@@ -23,19 +23,15 @@ export default async function UsersPage() {
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="mb-1 text-2xl font-bold text-gray-900">
-                Merchants
-              </h1>
-              <p className="text-gray-600">
-                Manage and monitor your merchant accounts
-              </p>
+              <h1 className="mb-1 text-2xl font-bold text-gray-900">Users</h1>
+              <p className="text-gray-600">Manage and monitor user accounts</p>
             </div>
             <div className="hidden md:block">
               <PermissionGate session={session} permissions={["users:manage"]}>
                 <Button asChild>
                   <Link href="/users/create">
                     <PlusIcon className="size-4" />
-                    Add Merchant
+                    Add User
                   </Link>
                 </Button>
               </PermissionGate>

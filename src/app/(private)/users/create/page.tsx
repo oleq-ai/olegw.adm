@@ -7,7 +7,7 @@ import { getSession } from "@/lib/session/session";
 import CreateUserForm from "./create-user-form";
 
 export const metadata: Metadata = {
-  title: "Create Merchant",
+  title: "Create User",
 };
 
 export default async function CreateUserPage() {
@@ -21,9 +21,9 @@ export default async function CreateUserPage() {
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <div>
             <h1 className="mb-1 text-2xl font-bold text-gray-900">
-              Create New Merchant
+              Create New User
             </h1>
-            <p className="text-gray-600">Add a new merchant to your platform</p>
+            <p className="text-gray-600">Add a new user to your platform</p>
           </div>
         </div>
 

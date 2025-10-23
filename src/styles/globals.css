@@ -49,6 +49,7 @@ body {
   [data-sidebar="sidebar"] {
     background-color: hsl(var(--sidebar)) !important;
     color: hsl(var(--sidebar-foreground)) !important;
+    border-right: 1px solid hsl(var(--sidebar-border)) !important;
   }
   
   /* Ensure sidebar content is visible */
@@ -58,6 +59,16 @@ body {
   
   [data-sidebar="group-label"] {
     color: hsl(var(--sidebar-foreground) / 0.7) !important;
+  }
+  
+  /* Fix sidebar border alignment */
+  .group\/sidebar-wrapper {
+    border-right: 1px solid hsl(var(--sidebar-border)) !important;
+  }
+  
+  /* Ensure proper sidebar container styling */
+  [data-sidebar="sidebar"] {
+    border-right: none !important;
   }
 
   .dark {
