@@ -21,7 +21,11 @@ export type FetcherOperationType =
   | "bonusconfig"
   | "getbleaderboard"
   | "clientsettings"
-  | "querypayment";
+  | "querypayment"
+  | "gettransactions"
+  | "getpendingtransaction"
+  | "getfailedtransaction"
+  | "getcompletedtransaction";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RequestOptions<TData = Record<string, any>> = {

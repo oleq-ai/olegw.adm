@@ -5,8 +5,12 @@ import { PlusIcon } from "lucide-react";
 
 import PermissionGate from "@/components/permissions/permission-gate";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getSession } from "@/lib/session/session";
 
+import CompletedTransactionsTable from "./completed-transactions-table";
+import FailedTransactionsTable from "./failed-transactions-table";
+import PendingTransactionsTable from "./pending-transactions-table";
 import TransactionsTable from "./transactions-table";
 
 export const metadata: Metadata = {
@@ -123,29 +127,56 @@ export default async function TransactionsPage() {
 
         {/* Transaction Tabs */}
         <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <div className="border-b border-gray-200">
-            <nav className="flex space-x-8 px-6" aria-label="Tabs">
-              <button className="border-b-2 border-blue-500 px-1 py-4 text-sm font-medium text-blue-600">
-                All Transactions
-              </button>
-              <button className="border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-                Completed
-              </button>
-              <button className="border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-                Pending
-              </button>
-              <button className="border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-                Failed
-              </button>
-            </nav>
-          </div>
-
-          {/* Content */}
-          <div className="p-6">
-            <PermissionGate session={session} permissions={["payments:view"]}>
-              <TransactionsTable />
-            </PermissionGate>
-          </div>
+          <Tabs defaultValue="all" className="w-full">
+            <div className="border-b border-gray-200">
+              <TabsList className="grid h-auto w-full grid-cols-4 rounded-none bg-transparent p-0">
+                <TabsTrigger
+                  value="all"
+                  className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
+                >
+                  All Transactions
+                </TabsTrigger>
+                <TabsTrigger
+                  value="completed"
+                  className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
+                >
+                  Completed
+                </TabsTrigger>
+                <TabsTrigger
+                  value="pending"
+                  className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
+                >
+                  Pending
+                </TabsTrigger>
+                <TabsTrigger
+                  value="failed"
+                  className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
+                >
+                  Failed
+                </TabsTrigger>
+              </TabsList>
+            </div>
+            <TabsContent value="all" className="mt-0">
+              <PermissionGate session={session} permissions={["payments:view"]}>
+                <TransactionsTable />
+              </PermissionGate>
+            </TabsContent>
+            <TabsContent value="completed" className="mt-0">
+              <PermissionGate session={session} permissions={["payments:view"]}>
+                <CompletedTransactionsTable />
+              </PermissionGate>
+            </TabsContent>
+            <TabsContent value="pending" className="mt-0">
+              <PermissionGate session={session} permissions={["payments:view"]}>
+                <PendingTransactionsTable />
+              </PermissionGate>
+            </TabsContent>
+            <TabsContent value="failed" className="mt-0">
+              <PermissionGate session={session} permissions={["payments:view"]}>
+                <FailedTransactionsTable />
+              </PermissionGate>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

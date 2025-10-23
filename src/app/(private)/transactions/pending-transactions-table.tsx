@@ -7,11 +7,11 @@ import { useQuery } from "@tanstack/react-query";
 import { DataTable } from "@/components/ui/data-table";
 import useUpdateSearchParams from "@/hooks/use-update-search-params";
 import { TAGS } from "@/lib/shared/constants";
-import { getTransactionsAction } from "@/lib/transactions/transaction.actions";
+import { getPendingTransactionsAction } from "@/lib/transactions/transaction.actions";
 
 import { TransactionTableColumns } from "./transaction-table-columns";
 
-export default function TransactionsTable() {
+export default function PendingTransactionsTable() {
   const router = useRouter();
   const { getParsedSearchParams } = useUpdateSearchParams();
   const searchParams = getParsedSearchParams();
@@ -20,13 +20,9 @@ export default function TransactionsTable() {
   const filter = searchParams.s ?? "";
 
   const { data, error, isError, isLoading, isRefetching } = useQuery({
-    queryKey: [TAGS.TRANSACTION, { page, pageSize, filter }],
+    queryKey: [TAGS.TRANSACTION, "pending", { page, pageSize, filter }],
     queryFn: async () => {
-      const res = await getTransactionsAction({
-        page: Number(page),
-        pageSize: Number(pageSize),
-        ...(filter && { search: filter }),
-      });
+      const res = await getPendingTransactionsAction();
       if (!res.success) throw new Error(res.error);
       return res.data;
     },

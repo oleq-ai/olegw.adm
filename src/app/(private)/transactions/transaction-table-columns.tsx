@@ -14,18 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-export type Transaction = {
-  id: string;
-  amount: number;
-  currency: string;
-  status: "completed" | "pending" | "failed";
-  type: "payment" | "refund" | "withdrawal";
-  merchant: string;
-  customer: string;
-  createdAt: string;
-  completedAt: string | null;
-};
+import { Transaction } from "@/lib/transactions/types/transaction.types";
 
 export const TransactionTableColumns: ColumnDef<Transaction>[] = [
   {
