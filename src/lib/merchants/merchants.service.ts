@@ -2,7 +2,12 @@ import "server-only";
 
 import { Fetcher } from "../api/api.service";
 import { Response } from "../shared/types";
-import { Merchant, MerchantResponse } from "./types/merchant.types";
+import {
+  Merchant,
+  MerchantDetails,
+  MerchantDetailsResponse,
+  MerchantResponse,
+} from "./types/merchant.types";
 
 export class MerchantService {
   constructor(private fetcher = new Fetcher()) {}
@@ -21,6 +26,44 @@ export class MerchantService {
         success: false,
         error:
           error instanceof Error ? error.message : "Failed to fetch merchants",
+      };
+    }
+  }
+
+  async getMerchant(
+    merchantid: string,
+    mobile?: string
+  ): Promise<Response<MerchantDetails>> {
+    try {
+      const res = await this.fetcher.request<MerchantDetailsResponse>("/", {
+        data: {
+          operation: "getmerchant",
+          merchantid,
+          mobile: mobile || "",
+        },
+      });
+
+      const merchantDetails: MerchantDetails = {
+        merchantid: res.merchantid,
+        merchantcode: res.merchantcode,
+        publickey: res.publickey,
+        name: res.name,
+        contactperson: res.contactperson,
+        email: res.email,
+        mobile: res.mobile,
+        active: res.active,
+        createdon: res.createdon,
+        createdby: res.createdby,
+      };
+
+      return { success: true, data: merchantDetails };
+    } catch (error) {
+      return {
+        success: false,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch merchant details",
       };
     }
   }

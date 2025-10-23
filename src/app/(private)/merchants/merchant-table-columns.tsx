@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import {
@@ -36,14 +38,17 @@ export const MerchantTableColumns: ColumnDef<Merchant>[] = [
     cell: ({ row }) => {
       const ukey = row.getValue("UKey") as string;
       return (
-        <div className="group flex items-center space-x-2">
+        <Link
+          href={`/merchants/${ukey}`}
+          className="group flex items-center space-x-2"
+        >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
             {ukey.slice(-2)}
           </div>
           <div className="cursor-pointer font-mono text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800">
             {ukey}
           </div>
-        </div>
+        </Link>
       );
     },
   },
