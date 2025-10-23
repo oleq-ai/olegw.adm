@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AlertCircle, Plus, Users } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,11 +36,12 @@ export default function MerchantsTable() {
   const filteredMerchants =
     data?.filter(
       (merchant) =>
-        merchant.Username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        merchant.Firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        merchant.Lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        merchant.Email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        merchant.City.toLowerCase().includes(searchTerm.toLowerCase())
+        merchant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        merchant.contactperson
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        merchant.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        merchant.merchantcode.toLowerCase().includes(searchTerm.toLowerCase())
     ) || [];
 
   if (isLoading) {
@@ -63,9 +63,7 @@ export default function MerchantsTable() {
                   </CardDescription>
                 </div>
               </div>
-              <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-                Loading...
-              </Badge>
+              <div className="text-sm text-gray-600">Loading...</div>
             </div>
           </CardHeader>
           <CardContent>
@@ -126,12 +124,6 @@ export default function MerchantsTable() {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Badge
-                  variant="secondary"
-                  className="bg-blue-100 text-blue-700"
-                >
-                  {filteredMerchants.length} merchants
-                </Badge>
                 <Button
                   size="sm"
                   className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
@@ -158,7 +150,9 @@ export default function MerchantsTable() {
               error={isError ? error : undefined}
               isFetching={isLoading}
               isRefetching={isRefetching}
-              onRowClick={({ UKey }) => router.push(`/merchants/${UKey}`)}
+              onRowClick={({ merchantid }) =>
+                router.push(`/merchants/${merchantid}`)
+              }
             />
           </CardContent>
         </div>

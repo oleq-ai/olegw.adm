@@ -6,20 +6,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import {
   Calendar,
-  CheckCircle,
   Edit,
   Eye,
   Mail,
-  MapPin,
   MoreHorizontal,
   Phone,
   Shield,
   Trash2,
   User,
-  XCircle,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -33,62 +29,51 @@ import { Merchant } from "@/lib/merchants/types/merchant.types";
 
 export const MerchantTableColumns: ColumnDef<Merchant>[] = [
   {
-    accessorKey: "UKey",
+    accessorKey: "merchantid",
     header: "Merchant ID",
     cell: ({ row }) => {
-      const ukey = row.getValue("UKey") as string;
+      const merchantid = row.getValue("merchantid") as string;
       return (
         <Link
-          href={`/merchants/${ukey}`}
-          className="group flex items-center space-x-2"
+          href={`/merchants/${merchantid}`}
+          className="cursor-pointer font-mono text-sm font-semibold text-gray-900 transition-colors hover:text-gray-700"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
-            {ukey.slice(-2)}
-          </div>
-          <div className="cursor-pointer font-mono text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800">
-            {ukey}
-          </div>
+          {merchantid}
         </Link>
       );
     },
   },
   {
-    accessorKey: "Username",
-    header: "Username",
+    accessorKey: "name",
+    header: "Merchant Name",
     cell: ({ row }) => {
-      const username = row.getValue("Username") as string;
+      const name = row.getValue("name") as string;
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-teal-600 text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
             <User className="h-3 w-3" />
           </div>
-          <div className="font-semibold text-gray-900">{username}</div>
+          <div className="font-semibold text-gray-900">{name}</div>
         </div>
       );
     },
   },
   {
-    accessorKey: "Firstname",
-    header: "Full Name",
+    accessorKey: "contactperson",
+    header: "Contact Person",
     cell: ({ row }) => {
-      const firstname = row.getValue("Firstname") as string;
-      const middlename = row.original.Middlename;
-      const lastname = row.original.Lastname;
-      const fullName = [firstname, middlename, lastname]
-        .filter(Boolean)
-        .join(" ");
-
-      return <div className="font-medium text-gray-900">{fullName}</div>;
+      const contactperson = row.getValue("contactperson") as string;
+      return <div className="font-medium text-gray-900">{contactperson}</div>;
     },
   },
   {
-    accessorKey: "Email",
+    accessorKey: "email",
     header: "Email",
     cell: ({ row }) => {
-      const email = row.getValue("Email") as string;
+      const email = row.getValue("email") as string;
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-600 text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
             <Mail className="h-3 w-3" />
           </div>
           <div className="text-sm text-gray-600">{email}</div>
@@ -97,13 +82,13 @@ export const MerchantTableColumns: ColumnDef<Merchant>[] = [
     },
   },
   {
-    accessorKey: "Mobile",
+    accessorKey: "mobile",
     header: "Phone",
     cell: ({ row }) => {
-      const mobile = row.getValue("Mobile") as string;
+      const mobile = row.getValue("mobile") as string;
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-600 text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
             <Phone className="h-3 w-3" />
           </div>
           <div className="font-mono text-sm text-gray-600">
@@ -114,79 +99,47 @@ export const MerchantTableColumns: ColumnDef<Merchant>[] = [
     },
   },
   {
-    accessorKey: "City",
-    header: "Location",
+    accessorKey: "merchantcode",
+    header: "Merchant Code",
     cell: ({ row }) => {
-      const city = row.getValue("City") as string;
+      const merchantcode = row.getValue("merchantcode") as string;
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-white">
-            <MapPin className="h-3 w-3" />
-          </div>
-          <div className="text-sm text-gray-600">{city}</div>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "RoleName",
-    header: "Role",
-    cell: ({ row }) => {
-      const roleName = row.getValue("RoleName") as string;
-      return (
-        <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
             <Shield className="h-3 w-3" />
           </div>
-          <Badge variant="outline" className="font-semibold">
-            {roleName}
-          </Badge>
+          <div className="text-sm text-gray-600">{merchantcode}</div>
         </div>
       );
     },
   },
   {
-    accessorKey: "Active",
+    accessorKey: "active",
     header: "Status",
     cell: ({ row }) => {
-      const isActive = row.getValue("Active") as string;
+      const isActive = row.getValue("active") as string;
       const isActiveBool = isActive === "True";
 
       return (
         <div className="flex items-center space-x-2">
-          <div
-            className={`flex h-6 w-6 items-center justify-center rounded-full ${
-              isActiveBool ? "bg-green-100" : "bg-red-100"
-            }`}
-          >
-            {isActiveBool ? (
-              <CheckCircle className="h-3 w-3 text-green-600" />
-            ) : (
-              <XCircle className="h-3 w-3 text-red-600" />
-            )}
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+            <User className="h-3 w-3" />
           </div>
-          <Badge
-            variant="secondary"
-            className={`font-semibold ${
-              isActiveBool
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
-            }`}
-          >
+          <span className="font-semibold text-gray-900">
             {isActiveBool ? "Active" : "Inactive"}
-          </Badge>
+          </span>
         </div>
       );
     },
   },
   {
-    accessorKey: "UtcTime",
+    accessorKey: "createdon",
     header: "Created",
     cell: ({ row }) => {
-      const date = new Date(row.getValue("UtcTime"));
+      const date = new Date(row.getValue("createdon"));
       return (
         <div className="flex items-center space-x-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-gray-500 to-gray-600 text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
             <Calendar className="h-3 w-3" />
           </div>
           <div className="text-sm text-gray-600">

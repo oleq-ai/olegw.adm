@@ -3,20 +3,24 @@ import "server-only";
 import { Fetcher } from "../api/api.service";
 import { Response } from "../shared/types";
 import {
-  Merchant,
   MerchantDetails,
   MerchantDetailsResponse,
-  MerchantResponse,
 } from "./types/merchant.types";
 
 export class MerchantService {
   constructor(private fetcher = new Fetcher()) {}
 
-  async getMerchants(): Promise<Response<Merchant[]>> {
+  async getMerchants(): Promise<Response<MerchantDetails[]>> {
     try {
-      const res = await this.fetcher.request<MerchantResponse>("/", {
+      const res = await this.fetcher.request<{
+        status: number;
+        data: MerchantDetails[];
+        message: string;
+      }>("/", {
         data: {
-          operation: "getusers",
+          operation: "getmerchants",
+          merchantid: "",
+          mobile: "",
         },
       });
 
@@ -44,7 +48,7 @@ export class MerchantService {
       });
 
       // Check if the response has the required fields
-      if (!res.merchantid || !res.name) {
+      if (!res || !res.merchantid || !res.name) {
         return {
           success: false,
           error: "Merchant not found",
@@ -66,6 +70,17 @@ export class MerchantService {
 
       return { success: true, data: merchantDetails };
     } catch (error) {
+      // If the error message contains "Merchant not found", return a clean error
+      if (
+        error instanceof Error &&
+        error.message.includes("Merchant not found")
+      ) {
+        return {
+          success: false,
+          error: "Merchant not found",
+        };
+      }
+
       return {
         success: false,
         error:

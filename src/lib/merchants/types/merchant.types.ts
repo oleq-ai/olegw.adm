@@ -1,18 +1,14 @@
 export interface Merchant {
-  UKey: string;
-  Username: string;
-  Mobile: string;
-  Firstname: string;
-  Middlename: string;
-  Lastname: string;
-  Gender: string;
-  City: string;
-  RoleID: string;
-  Email: string;
-  Active: string;
-  UtcTime: string;
-  RoleName: string;
-  modules: string[];
+  merchantid: string;
+  merchantcode: string;
+  publickey: string;
+  name: string;
+  contactperson: string;
+  email: string;
+  mobile: string;
+  active: string;
+  createdon: string;
+  createdby: string;
 }
 
 export interface MerchantResponse {
