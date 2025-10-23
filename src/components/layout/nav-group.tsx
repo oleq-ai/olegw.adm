@@ -36,6 +36,7 @@ import {
   MdOutlineSecurity,
   MdOutlineSettings,
   MdOutlineShield,
+  MdOutlineStore,
   MdOutlineSync,
   MdOutlineTune,
   MdOutlineVerified,
@@ -112,6 +113,7 @@ const Icon: Record<NavIcon, IconType> = {
   MdAutoGraph,
   MdOutlineGroups3,
   MdOutlineBusiness,
+  MdOutlineStore,
 } as const;
 
 export function NavGroup({ title, items }: NavGroup) {

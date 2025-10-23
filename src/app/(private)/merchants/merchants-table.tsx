@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { AlertCircle, Plus, Users } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -15,46 +16,33 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/data-table";
-import useUpdateSearchParams from "@/hooks/use-update-search-params";
-import { TAGS } from "@/lib/shared/constants";
-import { getCompletedTransactionsAction } from "@/lib/transactions/transaction.actions";
+import { getMerchantsAction } from "@/lib/merchants/merchant.actions";
 
-import TransactionDateFilter from "./transaction-date-filter";
-import { TransactionTableColumns } from "./transaction-table-columns";
+import { MerchantTableColumns } from "./merchant-table-columns";
 
-export default function CompletedTransactionsTable() {
+export default function MerchantsTable() {
   const router = useRouter();
-  const { getParsedSearchParams } = useUpdateSearchParams();
-  const searchParams = getParsedSearchParams();
-  const page = searchParams.page ?? "1";
-  const pageSize = searchParams.pageSize ?? "10";
-  const filter = searchParams.s ?? "";
-
-  const [startDate, setStartDate] = useState<string | undefined>();
-  const [endDate, setEndDate] = useState<string | undefined>();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { data, error, isError, isLoading, isRefetching } = useQuery({
-    queryKey: [
-      TAGS.TRANSACTION,
-      "completed",
-      { page, pageSize, filter, startDate, endDate },
-    ],
+    queryKey: ["merchants", searchTerm],
     queryFn: async () => {
-      const res = await getCompletedTransactionsAction(
-        startDate,
-        endDate,
-        parseInt(page),
-        parseInt(pageSize)
-      );
+      const res = await getMerchantsAction();
       if (!res.success) throw new Error(res.error);
       return res.data;
     },
   });
 
-  const handleDateChange = (start?: string, end?: string) => {
-    setStartDate(start);
-    setEndDate(end);
-  };
+  // Filter merchants based on search term
+  const filteredMerchants =
+    data?.filter(
+      (merchant) =>
+        merchant.Username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        merchant.Firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        merchant.Lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        merchant.Email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        merchant.City.toLowerCase().includes(searchTerm.toLowerCase())
+    ) || [];
 
   if (isLoading) {
     return (
@@ -63,22 +51,19 @@ export default function CompletedTransactionsTable() {
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white">
-                  <CheckCircle className="h-5 w-5" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
+                  <Users className="h-5 w-5" />
                 </div>
                 <div>
                   <CardTitle className="text-xl font-bold text-gray-900">
-                    Completed Transactions
+                    Merchants
                   </CardTitle>
                   <CardDescription className="text-gray-600">
-                    Successfully processed transactions
+                    Manage merchant accounts and permissions
                   </CardDescription>
                 </div>
               </div>
-              <Badge
-                variant="secondary"
-                className="bg-green-100 text-green-700"
-              >
+              <Badge variant="secondary" className="bg-blue-100 text-blue-700">
                 Loading...
               </Badge>
             </div>
@@ -108,7 +93,7 @@ export default function CompletedTransactionsTable() {
             </div>
             <div className="text-center">
               <h3 className="text-lg font-semibold text-red-900">
-                Error Loading Transactions
+                Error Loading Merchants
               </h3>
               <p className="text-red-600">
                 {error?.message || "Something went wrong"}
@@ -123,49 +108,57 @@ export default function CompletedTransactionsTable() {
   return (
     <div className="space-y-6">
       <Card className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="relative">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg">
-                  <CheckCircle className="h-5 w-5" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg">
+                  <Users className="h-5 w-5" />
                 </div>
                 <div>
                   <CardTitle className="text-xl font-bold text-gray-900">
-                    Completed Transactions
+                    Merchants
                   </CardTitle>
                   <CardDescription className="text-gray-600">
-                    Successfully processed transactions
+                    Manage merchant accounts and permissions
                   </CardDescription>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <Badge
                   variant="secondary"
-                  className="bg-green-100 text-green-700"
+                  className="bg-blue-100 text-blue-700"
                 >
-                  {data?.meta.itemCount || 0} transactions
+                  {filteredMerchants.length} merchants
                 </Badge>
-                <TransactionDateFilter
-                  onDateChange={handleDateChange}
-                  startDate={startDate}
-                  endDate={endDate}
-                />
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Merchant
+                </Button>
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
+            <div className="mb-4">
+              <input
+                type="text"
+                placeholder="Search merchants..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              />
+            </div>
             <DataTable
-              columns={TransactionTableColumns}
-              data={data?.data ?? []}
+              columns={MerchantTableColumns}
+              data={filteredMerchants}
               error={isError ? error : undefined}
               isFetching={isLoading}
               isRefetching={isRefetching}
-              pageCount={data?.meta.pageCount}
-              onRowClick={({ transactionid }) =>
-                router.push(`/transactions/${transactionid}`)
-              }
+              onRowClick={({ UKey }) => router.push(`/merchants/${UKey}`)}
             />
           </CardContent>
         </div>

@@ -1,180 +1,284 @@
-import { Metadata } from "next";
-import Link from "next/link";
+"use client";
 
-import { PlusIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import PermissionGate from "@/components/permissions/permission-gate";
-import { Button } from "@/components/ui/button";
+import {
+  Activity,
+  ArrowDownRight,
+  ArrowUpRight,
+  CheckCircle,
+  Clock,
+  Loader2,
+  TrendingUp,
+  XCircle,
+} from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getSession } from "@/lib/session/session";
+import {
+  getCompletedTransactionsAction,
+  getFailedTransactionsAction,
+  getPendingTransactionsAction,
+} from "@/lib/transactions/transaction.actions";
 
 import CompletedTransactionsTable from "./completed-transactions-table";
 import FailedTransactionsTable from "./failed-transactions-table";
 import PendingTransactionsTable from "./pending-transactions-table";
 
-export const metadata: Metadata = {
-  title: "Transactions",
-};
+// Note: Metadata is handled by the layout since this is now a client component
 
-export default async function TransactionsPage() {
-  const session = await getSession();
+interface TransactionStats {
+  completed: number;
+  pending: number;
+  failed: number;
+}
+
+export default function TransactionsPage() {
+  const [stats, setStats] = useState<TransactionStats>({
+    completed: 0,
+    pending: 0,
+    failed: 0,
+  });
+  const [isLoadingStats, setIsLoadingStats] = useState(true);
+
+  useEffect(() => {
+    // Fetch transaction counts
+    const fetchStats = async () => {
+      try {
+        setIsLoadingStats(true);
+        const [completedRes, pendingRes, failedRes] = await Promise.all([
+          getCompletedTransactionsAction(undefined, undefined, 1, 1),
+          getPendingTransactionsAction(undefined, undefined, 1, 1),
+          getFailedTransactionsAction(undefined, undefined, 1, 1),
+        ]);
+
+        setStats({
+          completed: completedRes.success
+            ? completedRes.data.meta.itemCount
+            : 0,
+          pending: pendingRes.success ? pendingRes.data.meta.itemCount : 0,
+          failed: failedRes.success ? failedRes.data.meta.itemCount : 0,
+        });
+      } catch {
+        // Handle error silently or show user-friendly message
+      } finally {
+        setIsLoadingStats(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="mb-1 text-2xl font-bold text-gray-900">
-                Transactions
-              </h1>
-              <p className="text-gray-600">
-                Monitor and manage all transaction activities
-              </p>
-            </div>
-            <div className="hidden md:block">
-              <PermissionGate
-                session={session}
-                permissions={["transactions:view"]}
-              >
-                <Button asChild>
-                  <Link href="/transactions/create">
-                    <PlusIcon className="size-4" />
-                    New Transaction
-                  </Link>
-                </Button>
-              </PermissionGate>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 p-6">
+      <div className="space-y-8">
+        {/* Enhanced Header */}
+        <div className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 p-8 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-indigo-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="relative">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg">
+                    <Activity className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl font-bold text-gray-900">
+                      Transaction Center
+                    </h1>
+                    <p className="text-gray-600">
+                      Monitor, manage, and analyze all transaction activities
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Transaction Stats */}
+        {/* Enhanced Transaction Stats */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-100">
-                  <svg
-                    className="h-5 w-5 text-green-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+          {/* Completed Transactions Card */}
+          <Card className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg">
+                    <CheckCircle className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Completed
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {isLoadingStats ? (
+                        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+                      ) : (
+                        stats.completed.toLocaleString()
+                      )}
+                    </p>
+                    <div className="flex items-center text-xs text-green-600">
+                      <ArrowUpRight className="mr-1 h-3 w-3" />
+                      Successfully processed
+                    </div>
+                  </div>
                 </div>
+                <Badge
+                  variant="secondary"
+                  className="bg-green-100 text-green-700"
+                >
+                  Success
+                </Badge>
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Completed</p>
-                <p className="text-2xl font-bold text-gray-900">1,234</p>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-yellow-100">
-                  <svg
-                    className="h-5 w-5 text-yellow-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+          {/* Pending Transactions Card */}
+          <Card className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-amber-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-500 to-amber-600 text-white shadow-lg">
+                    <Clock className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Pending</p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {isLoadingStats ? (
+                        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+                      ) : (
+                        stats.pending.toLocaleString()
+                      )}
+                    </p>
+                    <div className="flex items-center text-xs text-yellow-600">
+                      <TrendingUp className="mr-1 h-3 w-3" />
+                      Processing
+                    </div>
+                  </div>
                 </div>
+                <Badge
+                  variant="secondary"
+                  className="bg-yellow-100 text-yellow-700"
+                >
+                  In Progress
+                </Badge>
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Pending</p>
-                <p className="text-2xl font-bold text-gray-900">56</p>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-100">
-                  <svg
-                    className="h-5 w-5 text-red-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+          {/* Failed Transactions Card */}
+          <Card className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-rose-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 text-white shadow-lg">
+                    <XCircle className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Failed</p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {isLoadingStats ? (
+                        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+                      ) : (
+                        stats.failed.toLocaleString()
+                      )}
+                    </p>
+                    <div className="flex items-center text-xs text-red-600">
+                      <ArrowDownRight className="mr-1 h-3 w-3" />
+                      Requires attention
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Failed</p>
-                <p className="text-2xl font-bold text-gray-900">23</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Transaction Tabs */}
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <Tabs defaultValue="completed" className="w-full">
-            <div className="border-b border-gray-200">
-              <TabsList className="grid h-auto w-full grid-cols-3 rounded-none bg-transparent p-0">
-                <TabsTrigger
-                  value="completed"
-                  className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
-                >
-                  Completed
-                </TabsTrigger>
-                <TabsTrigger
-                  value="pending"
-                  className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
-                >
-                  Pending
-                </TabsTrigger>
-                <TabsTrigger
-                  value="failed"
-                  className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
-                >
+                <Badge variant="secondary" className="bg-red-100 text-red-700">
                   Failed
-                </TabsTrigger>
-              </TabsList>
-            </div>
-            <TabsContent value="completed" className="mt-0">
-              <PermissionGate
-                session={session}
-                permissions={["transactions:view"]}
-              >
-                <CompletedTransactionsTable />
-              </PermissionGate>
-            </TabsContent>
-            <TabsContent value="pending" className="mt-0">
-              <PermissionGate
-                session={session}
-                permissions={["transactions:view"]}
-              >
-                <PendingTransactionsTable />
-              </PermissionGate>
-            </TabsContent>
-            <TabsContent value="failed" className="mt-0">
-              <PermissionGate
-                session={session}
-                permissions={["transactions:view"]}
-              >
-                <FailedTransactionsTable />
-              </PermissionGate>
-            </TabsContent>
-          </Tabs>
+                </Badge>
+              </div>
+            </CardContent>
+          </Card>
         </div>
+
+        {/* Enhanced Transaction Tabs */}
+        <Card className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+          <div className="from-blue-500/3 via-purple-500/3 to-indigo-500/3 absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="relative">
+            <Tabs defaultValue="completed" className="w-full">
+              <div className="border-b border-gray-200/60 bg-gradient-to-r from-gray-50/50 to-gray-100/50">
+                <TabsList className="grid h-auto w-full grid-cols-3 rounded-none bg-transparent p-0">
+                  <TabsTrigger
+                    value="completed"
+                    className="group/tab relative border-b-2 border-transparent px-6 py-4 text-sm font-semibold transition-all duration-200 hover:bg-green-50/50 data-[state=active]:border-green-500 data-[state=active]:bg-green-50/80 data-[state=active]:text-green-700"
+                  >
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" />
+                      <span>Completed</span>
+                      <Badge
+                        variant="secondary"
+                        className="ml-2 bg-green-100 text-xs text-green-700"
+                      >
+                        {isLoadingStats ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          stats.completed.toLocaleString()
+                        )}
+                      </Badge>
+                    </div>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="pending"
+                    className="group/tab relative border-b-2 border-transparent px-6 py-4 text-sm font-semibold transition-all duration-200 hover:bg-yellow-50/50 data-[state=active]:border-yellow-500 data-[state=active]:bg-yellow-50/80 data-[state=active]:text-yellow-700"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4" />
+                      <span>Pending</span>
+                      <Badge
+                        variant="secondary"
+                        className="ml-2 bg-yellow-100 text-xs text-yellow-700"
+                      >
+                        {isLoadingStats ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          stats.pending.toLocaleString()
+                        )}
+                      </Badge>
+                    </div>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="failed"
+                    className="group/tab relative border-b-2 border-transparent px-6 py-4 text-sm font-semibold transition-all duration-200 hover:bg-red-50/50 data-[state=active]:border-red-500 data-[state=active]:bg-red-50/80 data-[state=active]:text-red-700"
+                  >
+                    <div className="flex items-center gap-2">
+                      <XCircle className="h-4 w-4" />
+                      <span>Failed</span>
+                      <Badge
+                        variant="secondary"
+                        className="ml-2 bg-red-100 text-xs text-red-700"
+                      >
+                        {isLoadingStats ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          stats.failed.toLocaleString()
+                        )}
+                      </Badge>
+                    </div>
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+              <TabsContent value="completed" className="mt-0">
+                <CompletedTransactionsTable />
+              </TabsContent>
+              <TabsContent value="pending" className="mt-0">
+                <PendingTransactionsTable />
+              </TabsContent>
+              <TabsContent value="failed" className="mt-0">
+                <FailedTransactionsTable />
+              </TabsContent>
+            </Tabs>
+          </div>
+        </Card>
       </div>
     </div>
   );

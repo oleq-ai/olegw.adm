@@ -36,7 +36,8 @@ type NavIcon =
   | "MdOutlinePerson"
   | "MdAutoGraph"
   | "MdOutlineGroups3"
-  | "MdOutlineBusiness";
+  | "MdOutlineBusiness"
+  | "MdOutlineStore";
 
 interface BaseNavItem {
   title: string;

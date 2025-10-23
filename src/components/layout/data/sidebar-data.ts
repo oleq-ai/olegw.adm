@@ -16,6 +16,12 @@ export const sidebarNavGroups: NavGroup[] = [
     title: "Merchant Management",
     items: [
       {
+        title: "Merchants",
+        url: "/merchants",
+        icon: "MdOutlineStore",
+        permissions: ["users:view"],
+      },
+      {
         title: "Accounts",
         url: "/accounts",
         icon: "MdOutlineAccountBalance",

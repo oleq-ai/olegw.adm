@@ -2,7 +2,18 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { MoreHorizontal } from "lucide-react";
+import {
+  Calendar,
+  CheckCircle,
+  Clock,
+  CreditCard,
+  Download,
+  Eye,
+  MoreHorizontal,
+  RefreshCw,
+  User,
+  XCircle,
+} from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,8 +34,13 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
     cell: ({ row }) => {
       const transactionId = row.getValue("transactionid") as string;
       return (
-        <div className="cursor-pointer font-medium text-blue-600 hover:text-blue-800">
-          {transactionId}
+        <div className="group flex items-center space-x-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
+            {transactionId.slice(-2)}
+          </div>
+          <div className="cursor-pointer font-mono text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800">
+            {transactionId}
+          </div>
         </div>
       );
     },
@@ -39,7 +55,14 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
         currency: "KES",
       }).format(amount);
 
-      return <div className="font-medium">{formatted}</div>;
+      return (
+        <div className="flex items-center space-x-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 text-white">
+            <CreditCard className="h-4 w-4" />
+          </div>
+          <div className="font-bold text-gray-900">{formatted}</div>
+        </div>
+      );
     },
   },
   {
@@ -51,21 +74,36 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
       const getStatusBadge = (description: string) => {
         if (description.toLowerCase().includes("success")) {
           return (
-            <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-              Completed
-            </Badge>
+            <div className="flex items-center space-x-2">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100">
+                <CheckCircle className="h-3 w-3 text-green-600" />
+              </div>
+              <Badge className="bg-green-100 font-semibold text-green-800 hover:bg-green-100">
+                Completed
+              </Badge>
+            </div>
           );
         } else if (description.toLowerCase().includes("pending")) {
           return (
-            <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
-              Pending
-            </Badge>
+            <div className="flex items-center space-x-2">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-100">
+                <Clock className="h-3 w-3 text-yellow-600" />
+              </div>
+              <Badge className="bg-yellow-100 font-semibold text-yellow-800 hover:bg-yellow-100">
+                Pending
+              </Badge>
+            </div>
           );
         } else {
           return (
-            <Badge className="bg-red-100 text-red-800 hover:bg-red-100">
-              Failed
-            </Badge>
+            <div className="flex items-center space-x-2">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100">
+                <XCircle className="h-3 w-3 text-red-600" />
+              </div>
+              <Badge className="bg-red-100 font-semibold text-red-800 hover:bg-red-100">
+                Failed
+              </Badge>
+            </div>
           );
         }
       };
@@ -78,15 +116,30 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
     header: "Type",
     cell: ({ row }) => {
       const type = row.getValue("transactiontype") as string;
-      return <div className="capitalize text-gray-900">{type}</div>;
+      return (
+        <div className="flex items-center space-x-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 text-white">
+            <CreditCard className="h-3 w-3" />
+          </div>
+          <Badge variant="outline" className="font-semibold">
+            {type}
+          </Badge>
+        </div>
+      );
     },
   },
   {
     accessorKey: "merchantcode",
     header: "Merchant",
     cell: ({ row }) => {
+      const merchantCode = row.getValue("merchantcode") as string;
       return (
-        <div className="text-gray-900">{row.getValue("merchantcode")}</div>
+        <div className="flex items-center space-x-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 text-xs font-bold text-white">
+            {merchantCode.slice(0, 2).toUpperCase()}
+          </div>
+          <div className="font-semibold text-gray-900">{merchantCode}</div>
+        </div>
       );
     },
   },
@@ -94,7 +147,15 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
     accessorKey: "msisdn",
     header: "Phone",
     cell: ({ row }) => {
-      return <div className="text-gray-600">{row.getValue("msisdn")}</div>;
+      const phone = row.getValue("msisdn") as string;
+      return (
+        <div className="flex items-center space-x-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-teal-600 text-white">
+            <User className="h-3 w-3" />
+          </div>
+          <div className="font-mono text-sm text-gray-600">{phone}</div>
+        </div>
+      );
     },
   },
   {
@@ -103,8 +164,14 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdon"));
       return (
-        <div className="text-gray-600">
-          {format(date, "MMM dd, yyyy HH:mm")}
+        <div className="flex items-center space-x-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-600 text-white">
+            <Calendar className="h-3 w-3" />
+          </div>
+          <div className="text-sm text-gray-600">
+            {format(date, "MMM dd, yyyy")}
+            <div className="text-xs text-gray-500">{format(date, "HH:mm")}</div>
+          </div>
         </div>
       );
     },
@@ -118,27 +185,44 @@ export const TransactionTableColumns: ColumnDef<Transaction>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button
+              variant="ghost"
+              className="h-8 w-8 p-0 transition-colors hover:bg-gray-100"
+            >
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel className="font-semibold">
+              Transaction Actions
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="flex items-center space-x-2">
+              <Eye className="h-4 w-4" />
+              <span>View details</span>
+            </DropdownMenuItem>
             <DropdownMenuItem
+              className="flex items-center space-x-2"
               onClick={() =>
                 navigator.clipboard.writeText(transaction.transactionid)
               }
             >
-              Copy transaction ID
+              <Download className="h-4 w-4" />
+              <span>Copy transaction ID</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View details</DropdownMenuItem>
             {transaction.status === "pending" && (
-              <DropdownMenuItem>Cancel transaction</DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center space-x-2 text-yellow-600">
+                <XCircle className="h-4 w-4" />
+                <span>Cancel transaction</span>
+              </DropdownMenuItem>
             )}
             {transaction.status === "failed" && (
-              <DropdownMenuItem>Retry transaction</DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center space-x-2 text-green-600">
+                <RefreshCw className="h-4 w-4" />
+                <span>Retry transaction</span>
+              </DropdownMenuItem>
             )}
           </DropdownMenuContent>
         </DropdownMenu>
