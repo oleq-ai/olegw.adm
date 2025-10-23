@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    template: `%s | MSAgent Admin`,
+    template: `%s | OleqGW Admin`,
     default: `${siteConfig.name} Admin`,
   },
   robots: {
@@ -76,6 +76,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
       >
         <ThemeProvider
           attribute="class"

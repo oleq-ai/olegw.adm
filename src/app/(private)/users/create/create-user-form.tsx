@@ -147,22 +147,8 @@ export default function CreateUserForm({ initialValues, canUpdate }: Props) {
   const isCustomRole = roleWatched === "custom";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 p-4 md:p-8">
-      <div className="mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="mb-2 flex items-center gap-3 text-3xl font-bold">
-            <div className="rounded-xl bg-primary p-2.5">
-              <User className="h-6 w-6 text-primary-foreground" />
-            </div>
-            {isUpdateMode ? "Update User" : "Create New User"}
-          </h1>
-          <p className="text-muted-foreground">
-            Fill in the details below to{" "}
-            {isUpdateMode ? "update the" : "create a new"} user account
-          </p>
-        </div>
-
+    <div className="p-6">
+      <div className="mx-auto max-w-4xl">
         <Form {...form}>
           <form
             onSubmit={handleSubmit((values) => mutate(values))}
@@ -170,8 +156,8 @@ export default function CreateUserForm({ initialValues, canUpdate }: Props) {
             noValidate
           >
             {/* Personal Information */}
-            <Card>
-              <CardHeader>
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
                 <CardTitle className="flex items-center gap-2">
                   <User className="h-5 w-5 text-primary" />
                   Personal Information
@@ -257,8 +243,8 @@ export default function CreateUserForm({ initialValues, canUpdate }: Props) {
             </Card>
 
             {/* Account Settings */}
-            <Card>
-              <CardHeader>
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
                 <CardTitle className="flex items-center gap-2">
                   <Settings className="h-5 w-5 text-primary" />
                   Account Settings

@@ -69,22 +69,8 @@ export default function CreateRoleForm({
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 p-4 md:p-8">
-      <div className="mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="mb-2 flex items-center gap-3 text-3xl font-bold">
-            <div className="rounded-xl bg-primary p-2.5">
-              <Shield className="h-6 w-6 text-primary-foreground" />
-            </div>
-            {isUpdate ? "Update Role" : "Create New Role"}
-          </h1>
-          <p className="text-muted-foreground">
-            Fill in the details below to{" "}
-            {isUpdate ? "update the" : "create a new"} role
-          </p>
-        </div>
-
+    <div className="p-6">
+      <div className="mx-auto max-w-4xl">
         <Form {...form}>
           <form
             onSubmit={handleSubmit((values) => mutate(values))}
@@ -92,8 +78,8 @@ export default function CreateRoleForm({
             noValidate
           >
             {/* Role Information */}
-            <Card>
-              <CardHeader>
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-primary" />
                   Role Information
@@ -124,8 +110,8 @@ export default function CreateRoleForm({
             </Card>
 
             {/* Permissions & Access */}
-            <Card>
-              <CardHeader>
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
                 <CardTitle className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-primary" />
                   Permissions & Access

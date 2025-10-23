@@ -1,10 +1,10 @@
 export const siteConfig = {
-  name: "MSAgent",
+  name: "OleqGW",
   description:
-    "Experience gaming like never before. Our platform offers the most immersive gaming experience available.",
-  website: "https://haraka.co.ls",
+    "Advanced merchant platform with comprehensive payment processing, merchant management, and real-time analytics for seamless business operations.",
+  website: "https://oleqgw.com",
   contact: {
-    email: "support@haraka.co.ls",
+    email: "support@oleqgw.com",
     phone: "57215305",
     whatsapp: "57215305",
   },
