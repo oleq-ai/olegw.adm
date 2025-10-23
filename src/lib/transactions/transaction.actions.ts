@@ -59,12 +59,16 @@ export async function getFailedTransactionsAction(
 
 export async function getCompletedTransactionsAction(
   startDate?: string,
-  endDate?: string
+  endDate?: string,
+  page: number = 1,
+  pageSize: number = 30
 ): Promise<Response<PaginatedResponse<Transaction>>> {
   try {
     const res = await transactionService.getCompletedTransactions(
       startDate,
-      endDate
+      endDate,
+      page,
+      pageSize
     );
     return { success: true, data: res };
   } catch (error) {

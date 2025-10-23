@@ -31,7 +31,12 @@ export default function CompletedTransactionsTable() {
       { page, pageSize, filter, startDate, endDate },
     ],
     queryFn: async () => {
-      const res = await getCompletedTransactionsAction(startDate, endDate);
+      const res = await getCompletedTransactionsAction(
+        startDate,
+        endDate,
+        parseInt(page),
+        parseInt(pageSize)
+      );
       if (!res.success) throw new Error(res.error);
       return res.data;
     },
