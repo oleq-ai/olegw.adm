@@ -11,7 +11,6 @@ import { getSession } from "@/lib/session/session";
 import CompletedTransactionsTable from "./completed-transactions-table";
 import FailedTransactionsTable from "./failed-transactions-table";
 import PendingTransactionsTable from "./pending-transactions-table";
-import TransactionsTable from "./transactions-table";
 
 export const metadata: Metadata = {
   title: "Transactions",
@@ -127,15 +126,9 @@ export default async function TransactionsPage() {
 
         {/* Transaction Tabs */}
         <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <Tabs defaultValue="all" className="w-full">
+          <Tabs defaultValue="completed" className="w-full">
             <div className="border-b border-gray-200">
-              <TabsList className="grid h-auto w-full grid-cols-4 rounded-none bg-transparent p-0">
-                <TabsTrigger
-                  value="all"
-                  className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
-                >
-                  All Transactions
-                </TabsTrigger>
+              <TabsList className="grid h-auto w-full grid-cols-3 rounded-none bg-transparent p-0">
                 <TabsTrigger
                   value="completed"
                   className="border-b-2 border-transparent px-4 py-3 text-sm font-medium data-[state=active]:border-primary data-[state=active]:bg-gray-50"
@@ -156,14 +149,6 @@ export default async function TransactionsPage() {
                 </TabsTrigger>
               </TabsList>
             </div>
-            <TabsContent value="all" className="mt-0">
-              <PermissionGate
-                session={session}
-                permissions={["transactions:view"]}
-              >
-                <TransactionsTable />
-              </PermissionGate>
-            </TabsContent>
             <TabsContent value="completed" className="mt-0">
               <PermissionGate
                 session={session}

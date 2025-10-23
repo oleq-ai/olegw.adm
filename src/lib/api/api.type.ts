@@ -10,6 +10,7 @@ export type FetcherOperationType =
   | "pullpaymentsout"
   | "retrywithdrawal"
   | "getdashboard"
+  | "getpaymentdashboard"
   | "pullclients"
   | "pullclient"
   | "issuebonus"
