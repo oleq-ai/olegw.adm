@@ -8,6 +8,7 @@ import {
   BarChart3,
   Building2,
   Calendar,
+  CreditCard,
   Mail,
   Phone,
   User,
@@ -50,6 +51,12 @@ export default function MerchantDetails({ merchant }: MerchantDetailsProps) {
                 <Button variant="outline" size="sm">
                   <BarChart3 className="mr-2 h-4 w-4" />
                   View Performance
+                </Button>
+              </Link>
+              <Link href={`/merchants/${merchant.merchantid}/accounts`}>
+                <Button variant="outline" size="sm">
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  View Accounts
                 </Button>
               </Link>
               <Button variant="outline" size="sm">

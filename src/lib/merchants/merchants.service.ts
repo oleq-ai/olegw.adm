@@ -2,7 +2,16 @@ import "server-only";
 
 import { Fetcher } from "../api/api.service";
 import { Response } from "../shared/types";
+import {
+  SaveMerchantAccountDto,
+  SaveMerchantAccountResponse,
+} from "./dto/merchant-account.dto";
 import { SaveMerchantDto, SaveMerchantResponse } from "./dto/merchant.dto";
+import {
+  MerchantAccount,
+  MerchantAccountsQuery,
+  MerchantAccountsResponse,
+} from "./types/merchant-accounts.types";
 import {
   MerchantPerformanceData,
   MerchantPerformanceQuery,
@@ -163,6 +172,52 @@ export class MerchantService {
           error instanceof Error
             ? error.message
             : "Failed to fetch merchant performance",
+      };
+    }
+  }
+
+  async getMerchantAccounts(
+    query: MerchantAccountsQuery
+  ): Promise<Response<MerchantAccount[]>> {
+    try {
+      const res = await this.fetcher.request<MerchantAccountsResponse>("/", {
+        data: {
+          operation: "getmerchantaccounts",
+          ...query,
+        },
+      });
+
+      return { success: true, data: res.data };
+    } catch (error) {
+      return {
+        success: false,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch merchant accounts",
+      };
+    }
+  }
+
+  async saveMerchantAccount(
+    accountData: SaveMerchantAccountDto
+  ): Promise<Response<SaveMerchantAccountResponse>> {
+    try {
+      const res = await this.fetcher.request<SaveMerchantAccountResponse>("/", {
+        data: {
+          operation: "savemerchantaccount",
+          ...accountData,
+        },
+      });
+
+      return { success: true, data: res };
+    } catch (error) {
+      return {
+        success: false,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to save merchant account",
       };
     }
   }

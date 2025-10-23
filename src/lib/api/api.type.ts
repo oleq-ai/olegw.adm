@@ -31,7 +31,9 @@ export type FetcherOperationType =
   | "getmerchant"
   | "getmerchants"
   | "savemerchant"
-  | "getmerchantperformance";
+  | "getmerchantperformance"
+  | "getmerchantaccounts"
+  | "savemerchantaccount";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RequestOptions<TData = Record<string, any>> = {
