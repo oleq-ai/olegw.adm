@@ -38,8 +38,8 @@ import { saveMerchantAccountAction } from "@/lib/merchants/merchant.actions";
 const createAccountSchema = z.object({
   merchantid: z.string().min(1, "Merchant ID is required"),
   accounttype: z.string().min(1, "Account type is required"),
-  accountname: z.string().min(1, "Account name is required"),
-  accountnumber: z.string().min(1, "Account number is required"),
+  name: z.string().min(1, "Account name is required"),
+  account: z.string().min(1, "Account number is required"),
   bankcode: z.string().min(1, "Bank code is required"),
   active: z.enum(["0", "1"], {
     errorMap: () => ({ message: "Please select a status" }),
@@ -71,8 +71,8 @@ export default function CreateAccountForm({
     defaultValues: {
       merchantid,
       accounttype: "",
-      accountname: "",
-      accountnumber: "",
+      name: "",
+      account: "",
       bankcode: "",
       active: "1",
       credentials: [{ name: "", value: "" }],
@@ -151,7 +151,7 @@ export default function CreateAccountForm({
 
               <FormField
                 control={form.control}
-                name="accountname"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm font-medium text-gray-700">
@@ -171,7 +171,7 @@ export default function CreateAccountForm({
 
               <FormField
                 control={form.control}
-                name="accountnumber"
+                name="account"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm font-medium text-gray-700">

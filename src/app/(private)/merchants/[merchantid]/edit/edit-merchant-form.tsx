@@ -44,7 +44,9 @@ export default function EditMerchantForm({ merchant }: EditMerchantFormProps) {
       name: merchant.name,
       contact: merchant.contactperson,
       email: merchant.email,
-      mobile: merchant.mobile,
+      mobile: merchant.mobile?.startsWith("+")
+        ? merchant.mobile
+        : `+${merchant.mobile}`,
       active: merchant.active === "True" ? "1" : "0",
     },
   });
