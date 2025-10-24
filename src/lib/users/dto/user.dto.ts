@@ -23,8 +23,17 @@ const baseUserSchema = z.object({
   gender: z.nativeEnum(Gender),
   roleid: z.string().min(1, { message: "Required" }),
   modules: z.array(z.string()).optional(),
+  active: z.boolean().optional(),
   password: z.string().min(1, { message: "Required" }),
   confirmPassword: z.string().min(1, { message: "Required" }),
+  // Additional fields for API compatibility
+  idtype: z.string().optional(),
+  idnumber: z.string().optional(),
+  address: z.string().optional(),
+  county: z.string().optional(),
+  postalcode: z.string().optional(),
+  city: z.string().optional(),
+  stations: z.array(z.string()).optional(),
 });
 
 export const createUserSchema = baseUserSchema

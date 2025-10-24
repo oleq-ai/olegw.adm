@@ -79,11 +79,11 @@ export default function CreateRoleForm({
           >
             {/* Role Information */}
             <Card className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="relative">
-                <CardHeader className="border-b border-gray-200/60 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 p-6">
+                <CardHeader className="border-b border-gray-200/60 bg-gradient-to-r from-emerald-50/50 to-teal-50/50 p-6">
                   <CardTitle className="flex items-center gap-3 text-xl">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600">
                       <FileText className="h-5 w-5" />
                     </div>
                     Role Information
@@ -161,7 +161,7 @@ export default function CreateRoleForm({
                 isLoading={isPending}
                 loadingText={isUpdate ? "Updating..." : "Creating..."}
                 size="lg"
-                className="gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                className="gap-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700"
                 disabled={!canUpdate}
               >
                 <Shield className="h-4 w-4" />

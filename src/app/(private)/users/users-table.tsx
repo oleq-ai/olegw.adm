@@ -1,19 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
-import { AlertCircle, Loader2, Users } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/data-table";
 import useUpdateSearchParams from "@/hooks/use-update-search-params";
 import { TAGS } from "@/lib/shared/constants";
@@ -29,8 +21,6 @@ export default function UsersTable() {
   const pageSize = searchParams.pageSize ?? "10";
   const filter = searchParams.s ?? "";
 
-  const [searchTerm, setSearchTerm] = useState("");
-
   const { data, error, isError, isLoading, isRefetching } = useQuery({
     queryKey: [TAGS.USER, { page, pageSize, filter }],
     queryFn: async () => {
@@ -44,40 +34,11 @@ export default function UsersTable() {
     },
   });
 
-  // Filter users based on search term
-  const filteredUsers =
-    data?.data?.filter(
-      (user) =>
-        user.Username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.Firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.Lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.Email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.City.toLowerCase().includes(searchTerm.toLowerCase())
-    ) || [];
+  const users = data?.data || [];
 
   if (isLoading) {
     return (
       <Card className="rounded-2xl border border-gray-200/60 bg-white/80 shadow-lg backdrop-blur-sm">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
-                <Users className="h-5 w-5" />
-              </div>
-              <div>
-                <CardTitle className="text-xl font-bold text-gray-900">
-                  Users
-                </CardTitle>
-                <CardDescription className="text-gray-600">
-                  Manage user accounts and permissions
-                </CardDescription>
-              </div>
-            </div>
-            <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-              Loading...
-            </Badge>
-          </div>
-        </CardHeader>
         <CardContent>
           <div className="animate-pulse space-y-4">
             {[...Array(5)].map((_, i) => (
@@ -119,47 +80,10 @@ export default function UsersTable() {
       <Card className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="relative">
-          <CardHeader className="pb-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg">
-                  <Users className="h-5 w-5" />
-                </div>
-                <div>
-                  <CardTitle className="text-xl font-bold text-gray-900">
-                    Users
-                  </CardTitle>
-                  <CardDescription className="text-gray-600">
-                    Manage user accounts and permissions
-                  </CardDescription>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Badge
-                  variant="secondary"
-                  className="bg-blue-100 text-blue-700"
-                >
-                  {filteredUsers.length} users
-                </Badge>
-                {isRefetching && (
-                  <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
-                )}
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Search users..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-              />
-            </div>
+          <CardContent>
             <DataTable
               columns={UserTableColumns}
-              data={filteredUsers}
+              data={users}
               error={isError ? error : undefined}
               isFetching={isLoading}
               isRefetching={isRefetching}

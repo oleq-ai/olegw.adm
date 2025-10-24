@@ -6,6 +6,8 @@ import { Plus, Settings, Shield, Users } from "lucide-react";
 import PermissionGate from "@/components/permissions/permission-gate";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { moduleItems } from "@/data/modules";
+import { getRolesAction } from "@/lib/roles/role.actions";
 import { getSession } from "@/lib/session/session";
 
 import RolesTable from "./roles-table";
@@ -17,16 +19,28 @@ export const metadata: Metadata = {
 export default async function RolesPage() {
   const session = await getSession();
 
+  // Fetch roles data for stats
+  const rolesResult = await getRolesAction({ page: 1, pageSize: 1000 });
+  const roles = rolesResult.success ? rolesResult.data?.data || [] : [];
+
+  // Calculate stats
+  const totalRoles = roles.length;
+  const totalPermissions = moduleItems.reduce(
+    (count, module) => count + (module.children?.length || 0),
+    0
+  );
+  const totalModules = moduleItems.length;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 p-6">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Modern Header */}
         <div className="group relative overflow-hidden rounded-2xl border border-gray-200/60 bg-white/80 p-8 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           <div className="relative">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg">
                   <Shield className="h-6 w-6" />
                 </div>
                 <div>
@@ -45,7 +59,7 @@ export default async function RolesPage() {
                 >
                   <Button
                     asChild
-                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                    className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700"
                   >
                     <Link href="/roles/create">
                       <Plus className="mr-2 h-4 w-4" />
@@ -74,7 +88,9 @@ export default async function RolesPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-gray-900">12</div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {totalRoles}
+                </div>
                 <div className="text-sm text-gray-500">Active roles</div>
               </CardContent>
             </div>
@@ -94,7 +110,9 @@ export default async function RolesPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-gray-900">24</div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {totalPermissions}
+                </div>
                 <div className="text-sm text-gray-500">
                   Available permissions
                 </div>
@@ -116,7 +134,9 @@ export default async function RolesPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-gray-900">6</div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {totalModules}
+                </div>
                 <div className="text-sm text-gray-500">System modules</div>
               </CardContent>
             </div>
