@@ -44,7 +44,7 @@ interface StatCardProps {
   color?: string;
 }
 
-// Clean StatCard with neutral styling
+// Clean StatCard with blue styling
 function StatCard({
   title,
   value,
@@ -53,17 +53,17 @@ function StatCard({
   positive = true,
 }: StatCardProps) {
   return (
-    <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+    <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <div className="mb-2 flex items-center gap-2">
-              <div className="text-sm font-medium text-gray-600">{title}</div>
+              <div className="text-sm font-medium text-blue-600">{title}</div>
               {change !== 0 && (
                 <div
                   className={`flex items-center rounded-full px-2 py-1 text-xs font-medium ${
                     positive
-                      ? "bg-green-100 text-green-700"
+                      ? "bg-blue-100 text-blue-700"
                       : "bg-red-100 text-red-700"
                   }`}
                 >
@@ -78,8 +78,8 @@ function StatCard({
             </div>
             <div className="text-2xl font-bold text-gray-900">{value}</div>
           </div>
-          <div className="rounded-lg bg-gray-100 p-3">
-            <Icon className="h-6 w-6 text-gray-600" />
+          <div className="rounded-lg bg-blue-100 p-3">
+            <Icon className="h-6 w-6 text-blue-600" />
           </div>
         </div>
       </CardContent>
@@ -89,19 +89,19 @@ function StatCard({
 
 function PaymentMethodsChart({ data }: { data: DashboardData }) {
   const colors = [
-    "#6B7280",
-    "#9CA3AF",
-    "#D1D5DB",
-    "#E5E7EB",
-    "#F3F4F6",
-    "#F9FAFB",
+    "#1E40AF", // Dark blue
+    "#3B82F6", // Blue
+    "#60A5FA", // Light blue
+    "#93C5FD", // Lighter blue
+    "#DBEAFE", // Very light blue
+    "#EFF6FF", // Lightest blue
   ];
 
   return (
-    <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+    <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-          <CreditCard className="h-5 w-5 text-gray-600" />
+          <CreditCard className="h-5 w-5 text-blue-600" />
           Payment Methods
         </CardTitle>
       </CardHeader>
@@ -176,17 +176,17 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
     {
       name: "Completed",
       value: data.completedcount,
-      color: "#6B7280",
+      color: "#1E40AF", // Dark blue
     },
     {
       name: "Failed",
       value: data.failedcount,
-      color: "#9CA3AF",
+      color: "#3B82F6", // Blue
     },
     {
       name: "Pending",
       value: data.pendingcount,
-      color: "#D1D5DB",
+      color: "#60A5FA", // Light blue
     },
   ];
 
@@ -194,10 +194,10 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
     data.completedcount + data.failedcount + data.pendingcount;
 
   return (
-    <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+    <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-          <Activity className="h-5 w-5 text-gray-600" />
+          <Activity className="h-5 w-5 text-blue-600" />
           Transaction Status
         </CardTitle>
       </CardHeader>
@@ -277,10 +277,10 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
 
 function TopMerchantsChart({ data }: { data: DashboardData }) {
   return (
-    <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+    <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
       <CardHeader className="pb-6">
         <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-          <Building2 className="h-5 w-5 text-gray-600" />
+          <Building2 className="h-5 w-5 text-blue-600" />
           Top Merchants
         </CardTitle>
       </CardHeader>
@@ -323,7 +323,7 @@ function TopMerchantsChart({ data }: { data: DashboardData }) {
                 ]}
                 labelFormatter={(label) => `Merchant: ${label}`}
               />
-              <Bar dataKey="revenue" fill="#6B7280" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="revenue" fill="#3B82F6" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -331,11 +331,11 @@ function TopMerchantsChart({ data }: { data: DashboardData }) {
           {data.topmerchants.map((merchant, index) => (
             <div
               key={index}
-              className="rounded-xl border border-gray-200 bg-gray-50 p-4"
+              className="rounded-xl border border-blue-200 bg-blue-50 p-4"
             >
               <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 text-sm font-bold text-white">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
                     {index + 1}
                   </div>
                   <span className="text-sm font-semibold text-gray-700">
@@ -453,7 +453,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="space-y-6">
         {/* Clean Header */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-blue-200 bg-white p-6 shadow-sm">
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
         </div>
 
@@ -500,10 +500,10 @@ export default function Dashboard() {
         </div>
 
         {/* Trends Chart */}
-        <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
           <CardHeader className="pb-6">
             <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-              <TrendingUp className="h-5 w-5 text-gray-600" />
+              <TrendingUp className="h-5 w-5 text-blue-600" />
               Transaction Trends
             </CardTitle>
           </CardHeader>
@@ -542,25 +542,25 @@ export default function Dashboard() {
                 <Line
                   type="monotone"
                   dataKey="completed"
-                  stroke="#10B981"
+                  stroke="#1E40AF"
                   strokeWidth={3}
-                  dot={{ fill: "#10B981", strokeWidth: 2, r: 4 }}
+                  dot={{ fill: "#1E40AF", strokeWidth: 2, r: 4 }}
                   name="Completed"
                 />
                 <Line
                   type="monotone"
                   dataKey="failed"
-                  stroke="#EF4444"
+                  stroke="#3B82F6"
                   strokeWidth={3}
-                  dot={{ fill: "#EF4444", strokeWidth: 2, r: 4 }}
+                  dot={{ fill: "#3B82F6", strokeWidth: 2, r: 4 }}
                   name="Failed"
                 />
                 <Line
                   type="monotone"
                   dataKey="pending"
-                  stroke="#F59E0B"
+                  stroke="#60A5FA"
                   strokeWidth={3}
-                  dot={{ fill: "#F59E0B", strokeWidth: 2, r: 4 }}
+                  dot={{ fill: "#60A5FA", strokeWidth: 2, r: 4 }}
                   name="Pending"
                 />
               </LineChart>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ComponentProps } from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -40,9 +41,9 @@ export async function AppSidebar({ user, ...props }: Props) {
       collapsible="icon"
       variant="floating"
       {...props}
-      className="border-r border-sidebar-border"
+      className="border-r border-sidebar-border bg-blue-900"
       style={{
-        backgroundColor: "hsl(240 5.9% 10%)",
+        backgroundColor: "#1E3A8A",
         color: "hsl(0 0% 98%)",
       }}
     >
@@ -51,15 +52,14 @@ export async function AppSidebar({ user, ...props }: Props) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" className="relative p-0">
               <div className="flex items-center space-x-3">
-                <div className="relative h-8 w-8 flex-shrink-0 rounded-lg bg-gradient-to-br from-purple-600 to-purple-800 p-1.5">
-                  <svg
-                    className="h-5 w-5 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    style={{ fill: "currentColor" }}
-                  >
-                    <path d="M4 6h16v2H4V6zm0 4h16v2H4v-2zm0 4h16v2H4v-2zm0 4h16v2H4v-2zM6 8h2v8H6V8zm10 0h2v8h-2V8z" />
-                  </svg>
+                <div className="relative h-8 w-8 flex-shrink-0 rounded-lg bg-white p-1">
+                  <Image
+                    src="/icons/credit.png"
+                    alt="OleqGW Logo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="overflow-hidden whitespace-nowrap text-lg font-bold text-white group-data-[collapsible=icon]:hidden">

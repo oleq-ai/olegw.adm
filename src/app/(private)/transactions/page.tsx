@@ -64,10 +64,10 @@ export default function TransactionsPage() {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="space-y-6">
         {/* Clean Header */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-blue-200 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-              <Activity className="h-5 w-5 text-gray-600" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+              <Activity className="h-5 w-5 text-blue-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Transactions</h1>
@@ -78,11 +78,11 @@ export default function TransactionsPage() {
         {/* Transaction Stats */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           {/* Completed Transactions Card */}
-          <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+          <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
             <CardContent className="p-6">
               <div className="flex items-center space-x-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                  <CheckCircle className="h-5 w-5 text-gray-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                  <CheckCircle className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-600">Completed</p>
@@ -99,11 +99,11 @@ export default function TransactionsPage() {
           </Card>
 
           {/* Pending Transactions Card */}
-          <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+          <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
             <CardContent className="p-6">
               <div className="flex items-center space-x-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                  <Clock className="h-5 w-5 text-gray-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                  <Clock className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-600">Pending</p>
@@ -120,11 +120,11 @@ export default function TransactionsPage() {
           </Card>
 
           {/* Failed Transactions Card */}
-          <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+          <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
             <CardContent className="p-6">
               <div className="flex items-center space-x-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                  <XCircle className="h-5 w-5 text-gray-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                  <XCircle className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-600">Failed</p>
@@ -142,13 +142,13 @@ export default function TransactionsPage() {
         </div>
 
         {/* Transaction Tabs */}
-        <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
           <Tabs defaultValue="completed" className="w-full">
-            <div className="border-b border-gray-200">
+            <div className="border-b border-blue-200">
               <TabsList className="grid h-auto w-full grid-cols-3 rounded-none bg-transparent p-0">
                 <TabsTrigger
                   value="completed"
-                  className="border-b-2 border-transparent px-6 py-4 text-sm font-semibold data-[state=active]:border-gray-600 data-[state=active]:text-gray-900"
+                  className="border-b-2 border-transparent px-6 py-4 text-sm font-semibold data-[state=active]:border-blue-600 data-[state=active]:text-blue-900"
                 >
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4" />
@@ -157,7 +157,7 @@ export default function TransactionsPage() {
                 </TabsTrigger>
                 <TabsTrigger
                   value="pending"
-                  className="border-b-2 border-transparent px-6 py-4 text-sm font-semibold data-[state=active]:border-gray-600 data-[state=active]:text-gray-900"
+                  className="border-b-2 border-transparent px-6 py-4 text-sm font-semibold data-[state=active]:border-blue-600 data-[state=active]:text-blue-900"
                 >
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4" />
@@ -166,7 +166,7 @@ export default function TransactionsPage() {
                 </TabsTrigger>
                 <TabsTrigger
                   value="failed"
-                  className="border-b-2 border-transparent px-6 py-4 text-sm font-semibold data-[state=active]:border-gray-600 data-[state=active]:text-gray-900"
+                  className="border-b-2 border-transparent px-6 py-4 text-sm font-semibold data-[state=active]:border-blue-600 data-[state=active]:text-blue-900"
                 >
                   <div className="flex items-center gap-2">
                     <XCircle className="h-4 w-4" />

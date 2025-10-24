@@ -77,7 +77,7 @@ export default function LoginForm({ username = "", password = "" }: Props) {
             name="username"
             label="Phone Number"
             placeholder="07000000000"
-            className="[&_input]:focus:border-green-500 [&_input]:focus:ring-green-500/20 [&_input]:focus-visible:border-green-500 [&_input]:focus-visible:ring-green-500/20"
+            className="[&_input]:focus:border-blue-500 [&_input]:focus:ring-blue-500/20 [&_input]:focus-visible:border-blue-500 [&_input]:focus-visible:ring-blue-500/20"
           />
           <div className="space-y-1">
             <FormInput
@@ -86,12 +86,12 @@ export default function LoginForm({ username = "", password = "" }: Props) {
               label="Password"
               type="password"
               placeholder="••••••••"
-              className="[&_button]:text-green-600 [&_button]:hover:text-green-700 [&_input]:focus:border-green-500 [&_input]:focus:ring-green-500/20 [&_input]:focus-visible:border-green-500 [&_input]:focus-visible:ring-green-500/20"
+              className="[&_button]:text-blue-600 [&_button]:hover:text-blue-700 [&_input]:focus:border-blue-500 [&_input]:focus:ring-blue-500/20 [&_input]:focus-visible:border-blue-500 [&_input]:focus-visible:ring-blue-500/20"
             />
             <div className="flex justify-end">
               <Link
                 href="/forgot-password"
-                className="text-sm text-green-600 underline-offset-4 hover:text-green-700 hover:underline"
+                className="text-sm text-blue-600 underline-offset-4 hover:text-blue-700 hover:underline"
               >
                 Forgot password?
               </Link>
@@ -100,7 +100,7 @@ export default function LoginForm({ username = "", password = "" }: Props) {
 
           <FormButton
             isLoading={isPending}
-            className="w-full border-0 bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg hover:from-green-700 hover:to-emerald-700"
+            className="w-full border-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:from-blue-700 hover:to-indigo-700"
           >
             Sign In
           </FormButton>

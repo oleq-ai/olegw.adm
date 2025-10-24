@@ -8,20 +8,20 @@ export const metadata: Metadata = {
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="relative min-h-svh bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
+    <div className="relative min-h-svh bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-100">
       {/* Modern geometric background */}
       <div className="absolute inset-0">
         {/* Floating geometric shapes */}
-        <div className="absolute left-10 top-20 h-32 w-32 rounded-full bg-gradient-to-br from-green-200/30 to-emerald-300/30 blur-xl" />
-        <div className="absolute right-20 top-40 h-24 w-24 rounded-full bg-gradient-to-br from-teal-200/30 to-cyan-300/30 blur-xl" />
-        <div className="absolute bottom-32 left-1/4 h-40 w-40 rounded-full bg-gradient-to-br from-lime-200/30 to-green-300/30 blur-xl" />
-        <div className="absolute bottom-20 right-1/3 h-28 w-28 rounded-full bg-gradient-to-br from-emerald-200/30 to-teal-300/30 blur-xl" />
+        <div className="absolute left-10 top-20 h-32 w-32 rounded-full bg-gradient-to-br from-blue-200/30 to-indigo-300/30 blur-xl" />
+        <div className="absolute right-20 top-40 h-24 w-24 rounded-full bg-gradient-to-br from-sky-200/30 to-blue-300/30 blur-xl" />
+        <div className="absolute bottom-32 left-1/4 h-40 w-40 rounded-full bg-gradient-to-br from-indigo-200/30 to-blue-300/30 blur-xl" />
+        <div className="absolute bottom-20 right-1/3 h-28 w-28 rounded-full bg-gradient-to-br from-blue-200/30 to-sky-300/30 blur-xl" />
 
         {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(34,197,94,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(34,197,94,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
         {/* Diagonal lines */}
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_48%,rgba(34,197,94,0.05)_50%,transparent_52%)] bg-[size:60px_60px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_48%,rgba(59,130,246,0.05)_50%,transparent_52%)] bg-[size:60px_60px]" />
       </div>
 
       <div className="container relative mx-auto flex min-h-svh flex-col items-center justify-center px-4 py-12">

@@ -35,11 +35,11 @@ export default async function RolesPage() {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Clean Header */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-blue-200 bg-white p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                <Shield className="h-5 w-5 text-gray-600" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                <Shield className="h-5 w-5 text-blue-600" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Roles</h1>
@@ -58,13 +58,13 @@ export default async function RolesPage() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+          <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
             <CardHeader className="pb-3">
               <div className="flex items-center space-x-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                  <Users className="h-5 w-5 text-gray-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                  <Users className="h-5 w-5 text-blue-600" />
                 </div>
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-blue-600">
                   Total Roles
                 </CardTitle>
               </div>
@@ -76,13 +76,13 @@ export default async function RolesPage() {
             </CardContent>
           </Card>
 
-          <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+          <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
             <CardHeader className="pb-3">
               <div className="flex items-center space-x-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                  <Shield className="h-5 w-5 text-gray-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                  <Shield className="h-5 w-5 text-blue-600" />
                 </div>
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-blue-600">
                   Permissions
                 </CardTitle>
               </div>
@@ -94,13 +94,13 @@ export default async function RolesPage() {
             </CardContent>
           </Card>
 
-          <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+          <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
             <CardHeader className="pb-3">
               <div className="flex items-center space-x-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                  <Settings className="h-5 w-5 text-gray-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                  <Settings className="h-5 w-5 text-blue-600" />
                 </div>
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-blue-600">
                   Modules
                 </CardTitle>
               </div>
@@ -114,7 +114,7 @@ export default async function RolesPage() {
         </div>
 
         {/* Table */}
-        <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-xl border border-blue-200 bg-white shadow-sm">
           <PermissionGate session={session} permissions={["roles:view"]}>
             <RolesTable />
           </PermissionGate>
