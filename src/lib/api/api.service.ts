@@ -71,10 +71,20 @@ export class Fetcher {
 
         const { reference, XMAUTH } = this.generateTokens(operation, ref);
 
+        const requestData: Record<
+          string,
+          string | number | boolean | string[] | undefined
+        > = { ...data, reference, countrycode: country, operation };
+
+        // Only include ukey if it exists (not during authentication)
+        if (ukey) {
+          requestData.ukey = ukey;
+        }
+
         const requestOptions: AxiosRequestConfig = {
           url,
           method,
-          data: { ...data, reference, countrycode: country, operation, ukey },
+          data: requestData,
           headers: {
             CHANNEL: "admin",
             XMAUTH,

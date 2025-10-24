@@ -16,7 +16,7 @@ export class AuthService {
   constructor(private fetcher = new Fetcher()) {}
 
   async signIn(values: SignInDto): Promise<void> {
-    const pass = values.password;
+    const pass = await getHashedString(values.password);
 
     const country = getCountryCode(values.username) ?? "KE";
 
