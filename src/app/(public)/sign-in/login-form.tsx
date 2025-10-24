@@ -7,12 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import FormButton from "@/components/ui/form-button";
 import FormInput from "@/components/ui/form-input";
 import FormPhoneInput from "@/components/ui/form-phone-input";
-import { Separator } from "@/components/ui/separator";
 import { signInAction } from "@/lib/auth/auth.actions";
 import { type SignInDto, signInSchema } from "@/lib/auth/dto/sign-in.dto";
 
@@ -60,59 +58,54 @@ export default function LoginForm({ username = "", password = "" }: Props) {
   }
 
   return (
-    <Card className="border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <CardContent className="pt-6">
-        <div className="flex flex-col space-y-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Welcome back
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Enter your credentials to access your account
-          </p>
-        </div>
+    <div className="space-y-6">
+      <div className="text-center">
+        <h1 className="text-2xl font-semibold text-gray-900">Welcome back</h1>
+        <p className="mt-2 text-sm text-gray-600">
+          Enter your credentials to access your account
+        </p>
+      </div>
 
-        <Separator className="my-4" />
-
-        <Form {...form}>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-4"
-            noValidate
-          >
-            <FormPhoneInput
+      <Form {...form}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+          noValidate
+        >
+          <FormPhoneInput
+            control={control}
+            name="username"
+            label="Phone Number"
+            placeholder="07000000000"
+            className="[&_input]:focus:border-green-500 [&_input]:focus:ring-green-500/20 [&_input]:focus-visible:border-green-500 [&_input]:focus-visible:ring-green-500/20"
+          />
+          <div className="space-y-1">
+            <FormInput
               control={control}
-              name="username"
-              label="Phone Number"
-              placeholder="07000000000"
+              name="password"
+              label="Password"
+              type="password"
+              placeholder="••••••••"
+              className="[&_button]:text-green-600 [&_button]:hover:text-green-700 [&_input]:focus:border-green-500 [&_input]:focus:ring-green-500/20 [&_input]:focus-visible:border-green-500 [&_input]:focus-visible:ring-green-500/20"
             />
-            <div className="space-y-1">
-              <FormInput
-                control={control}
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="••••••••"
-              />
-              <div className="flex justify-end">
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+            <div className="flex justify-end">
+              <Link
+                href="/forgot-password"
+                className="text-sm text-green-600 underline-offset-4 hover:text-green-700 hover:underline"
+              >
+                Forgot password?
+              </Link>
             </div>
+          </div>
 
-            <FormButton isLoading={isPending} className="w-full">
-              Sign In
-            </FormButton>
-          </form>
-        </Form>
-
-        <div className="mt-4 text-center text-sm text-muted-foreground">
-          <p>Protected by enterprise-grade security</p>
-        </div>
-      </CardContent>
-    </Card>
+          <FormButton
+            isLoading={isPending}
+            className="w-full border-0 bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg hover:from-green-700 hover:to-emerald-700"
+          >
+            Sign In
+          </FormButton>
+        </form>
+      </Form>
+    </div>
   );
 }

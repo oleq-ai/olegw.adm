@@ -2,68 +2,58 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { ReactNode } from "react";
 
-import { siteConfig } from "@/config/site.config";
-
 export const metadata: Metadata = {
   title: "Sign In",
 };
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="relative min-h-svh bg-background">
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/5" />
+    <div className="relative min-h-svh bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
+      {/* Modern geometric background */}
+      <div className="absolute inset-0">
+        {/* Floating geometric shapes */}
+        <div className="absolute left-10 top-20 h-32 w-32 rounded-full bg-gradient-to-br from-green-200/30 to-emerald-300/30 blur-xl" />
+        <div className="absolute right-20 top-40 h-24 w-24 rounded-full bg-gradient-to-br from-teal-200/30 to-cyan-300/30 blur-xl" />
+        <div className="absolute bottom-32 left-1/4 h-40 w-40 rounded-full bg-gradient-to-br from-lime-200/30 to-green-300/30 blur-xl" />
+        <div className="absolute bottom-20 right-1/3 h-28 w-28 rounded-full bg-gradient-to-br from-emerald-200/30 to-teal-300/30 blur-xl" />
 
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(34,197,94,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(34,197,94,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+        {/* Diagonal lines */}
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_48%,rgba(34,197,94,0.05)_50%,transparent_52%)] bg-[size:60px_60px]" />
       </div>
-
-      {/* Subtle grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)]" />
 
       <div className="container relative mx-auto flex min-h-svh flex-col items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           {/* Header */}
           <div className="mb-8 flex flex-col items-center space-y-4">
-            <div className="relative h-16 w-48">
+            {/* Custom logo */}
+            <div className="relative h-20 w-20">
               <Image
-                src="/icons/logo.png"
-                alt={`${siteConfig.name} Logo`}
+                src="/icons/credit.png"
+                alt="OleqGW Logo"
                 fill
                 className="object-contain"
                 priority
               />
             </div>
 
-            <div className="flex items-center gap-2 rounded-full border border-border/50 bg-background/50 px-4 py-1.5 backdrop-blur-sm">
-              <svg
-                className="h-3.5 w-3.5 text-purple-600"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M4 6h16v2H4V6zm0 4h16v2H4v-2zm0 4h16v2H4v-2zm0 4h16v2H4v-2zM6 8h2v8H6V8zm10 0h2v8h-2V8z" />
-              </svg>
-              <span className="text-sm font-medium text-muted-foreground">
-                Admin Portal
-              </span>
+            {/* Brand name */}
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-gray-900">OleqGW</h1>
             </div>
           </div>
 
           {/* Auth Card */}
-          <div className="rounded-lg border border-border/50 bg-card/50 p-8 shadow-sm backdrop-blur-sm">
+          <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-lg">
             {children}
           </div>
 
           {/* Footer */}
-          <div className="mt-8 space-y-2 text-center">
-            <p className="text-xs text-muted-foreground">
-              Secure authentication powered by Oleq
-            </p>
-            <p className="text-xs text-muted-foreground/70">
-              © {new Date().getFullYear()} {siteConfig.name}. All rights
-              reserved.
+          <div className="mt-6 text-center">
+            <p className="text-xs text-gray-500">
+              © {new Date().getFullYear()} OleqGW. All rights reserved.
             </p>
           </div>
         </div>

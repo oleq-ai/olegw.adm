@@ -53,11 +53,11 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
-      url: `/icons/favicon.ico`,
+      url: `/icons/credit.png`,
     },
     {
       rel: "apple-touch-icon",
-      url: `/icons/apple-touch-icon.png`,
+      url: `/icons/credit.png`,
     },
     {
       rel: "manifest",
