@@ -23,10 +23,7 @@ export default async function DepositsPage() {
       <div className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
         <BreadcrumbNav title="Deposits" />
 
-        <PermissionGate
-          session={session}
-          permissions={["transactions:withdrawals"]}
-        >
+        <PermissionGate session={session} permissions={["transactions:view"]}>
           <div className="flex items-center justify-end gap-2">
             <Button asChild>
               <Link href="/transactions/withdrawals">
@@ -42,10 +39,7 @@ export default async function DepositsPage() {
         <div className="w-full space-y-4">
           <h3 className="text-2xl font-bold tracking-tight">Deposit History</h3>
 
-          <PermissionGate
-            session={session}
-            permissions={["transactions:deposits"]}
-          >
+          <PermissionGate session={session} permissions={["transactions:view"]}>
             <div className="flex justify-end">
               <QueryPaymentButton />
             </div>

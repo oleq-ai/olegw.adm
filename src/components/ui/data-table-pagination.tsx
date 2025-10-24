@@ -25,8 +25,8 @@ export function DataTablePagination<TData>({
   //   const show = table.getPageCount() > 1;
 
   return (
-    <div className="flex items-center justify-between px-2">
-      <div className="flex-1 text-sm text-muted-foreground">
+    <div className="flex items-center justify-between px-2 py-4">
+      <div className="flex-1 text-sm text-gray-600">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
@@ -59,6 +59,7 @@ export function DataTablePagination<TData>({
         <div className="flex items-center space-x-2">
           <Button
             variant="outline"
+            size="sm"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
@@ -69,6 +70,7 @@ export function DataTablePagination<TData>({
 
           <Button
             variant="outline"
+            size="sm"
             className="h-8 w-8 p-0"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -78,6 +80,7 @@ export function DataTablePagination<TData>({
           </Button>
           <Button
             variant="outline"
+            size="sm"
             className="h-8 w-8 p-0"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
@@ -87,6 +90,7 @@ export function DataTablePagination<TData>({
           </Button>
           <Button
             variant="outline"
+            size="sm"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}

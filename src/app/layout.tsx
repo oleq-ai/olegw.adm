@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    template: `%s | MSAgent Admin`,
+    template: `%s | OleqGW Admin`,
     default: `${siteConfig.name} Admin`,
   },
   robots: {
@@ -53,11 +53,11 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
-      url: `/icons/favicon.ico`,
+      url: `/icons/credit.png`,
     },
     {
       rel: "apple-touch-icon",
-      url: `/icons/apple-touch-icon.png`,
+      url: `/icons/credit.png`,
     },
     {
       rel: "manifest",
@@ -76,6 +76,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
       >
         <ThemeProvider
           attribute="class"

@@ -13,13 +13,30 @@ export const sidebarNavGroups: NavGroup[] = [
     ],
   },
   {
-    title: "Analytics & Reports",
+    title: "Merchant Management",
     items: [
       {
+        title: "Merchants",
+        url: "/merchants",
+        icon: "MdOutlineStore",
+        permissions: ["users:view"],
+      },
+      {
         title: "Reports",
-        url: "/reports",
-        icon: "MdOutlineInsertChart",
-        permissions: ["reports:view"],
+        url: "/merchants/performance",
+        icon: "MdOutlineBarChart",
+        permissions: ["dashboard:view"],
+      },
+      {
+        title: "Accounts",
+        url: "/accounts",
+        icon: "MdOutlineAccountBalance",
+      },
+      {
+        title: "Transactions",
+        url: "/transactions",
+        icon: "MdOutlinePayments",
+        permissions: ["transactions:view"],
       },
     ],
   },
@@ -29,7 +46,7 @@ export const sidebarNavGroups: NavGroup[] = [
       {
         title: "Users",
         url: "/users",
-        icon: "MdOutlineGroup",
+        icon: "MdOutlineBusiness",
         permissions: ["users:view"],
       },
       {
@@ -47,7 +64,7 @@ export const sidebarNavGroups: NavGroup[] = [
         title: "General Settings",
         url: "/settings",
         icon: "MdOutlineSettings",
-        permissions: ["settings:view"],
+        permissions: ["dashboard:view"],
       },
     ],
   },

@@ -59,7 +59,8 @@ export default function FormPhoneInput<T extends FieldValues>({
             <PhoneInput
               placeholder={placeholder}
               defaultCountry={country}
-              {...field}
+              value={field.value || ""}
+              onChange={(value) => field.onChange(value || "")}
             />
           </FormControl>
 

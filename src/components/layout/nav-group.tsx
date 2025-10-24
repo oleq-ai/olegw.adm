@@ -15,6 +15,8 @@ import {
   MdOutlineArrowDownward,
   MdOutlineArrowUpward,
   MdOutlineAttachMoney,
+  MdOutlineBarChart,
+  MdOutlineBusiness,
   MdOutlineCalculate,
   MdOutlineCalendarToday,
   MdOutlineCardGiftcard,
@@ -35,6 +37,7 @@ import {
   MdOutlineSecurity,
   MdOutlineSettings,
   MdOutlineShield,
+  MdOutlineStore,
   MdOutlineSync,
   MdOutlineTune,
   MdOutlineVerified,
@@ -104,12 +107,15 @@ const Icon: Record<NavIcon, IconType> = {
   MdOutlineGroup,
   MdOutlineSecurity,
   MdOutlineInsertChart,
+  MdOutlineBarChart,
   MdOutlineGamepad,
   MdOutlineAddBox,
   MdOutlineTune,
   MdOutlinePerson,
   MdAutoGraph,
   MdOutlineGroups3,
+  MdOutlineBusiness,
+  MdOutlineStore,
 } as const;
 
 export function NavGroup({ title, items }: NavGroup) {
@@ -119,8 +125,10 @@ export function NavGroup({ title, items }: NavGroup) {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{title}</SidebarGroupLabel>
-      <SidebarMenu>
+      <SidebarGroupLabel className="mb-2 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/70">
+        {title}
+      </SidebarGroupLabel>
+      <SidebarMenu className="space-y-0">
         {items.map((item) => {
           const key = `${item.title}-${item.url}`;
 
@@ -152,17 +160,14 @@ const NavBadge = ({ children }: { children: ReactNode }) => (
 const SidebarMenuLink = ({ item, href }: { item: NavLink; href: string }) => {
   const { setOpenMobile } = useSidebar();
   const ItemIcon = item.icon ? Icon[item.icon] : null;
+  const isActive = checkIsActive(href, item);
 
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton
-        asChild
-        isActive={checkIsActive(href, item)}
-        tooltip={item.title}
-      >
+      <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
         <Link href={item.url} onClick={() => setOpenMobile(false)}>
-          {ItemIcon && <ItemIcon />}
-          <span>{item.title}</span>
+          {ItemIcon && <ItemIcon className="h-5 w-5" />}
+          <span className="font-medium">{item.title}</span>
           {item.badge && <NavBadge>{item.badge}</NavBadge>}
         </Link>
       </SidebarMenuButton>
@@ -189,8 +194,8 @@ const SidebarMenuCollapsible = ({
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton tooltip={item.title}>
-            {ItemIcon && <ItemIcon />}
-            <span>{item.title}</span>
+            {ItemIcon && <ItemIcon className="h-5 w-5" />}
+            <span className="font-medium">{item.title}</span>
             {item.badge && <NavBadge>{item.badge}</NavBadge>}
             <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
           </SidebarMenuButton>
@@ -209,8 +214,8 @@ const SidebarMenuCollapsible = ({
                       href={subItem.url}
                       onClick={() => setOpenMobile(false)}
                     >
-                      {SubItemIcon && <SubItemIcon />}
-                      <span>{subItem.title}</span>
+                      {SubItemIcon && <SubItemIcon className="h-5 w-5" />}
+                      <span className="font-medium">{subItem.title}</span>
                       {subItem.badge && <NavBadge>{subItem.badge}</NavBadge>}
                     </Link>
                   </SidebarMenuSubButton>

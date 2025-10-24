@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, JSX, useEffect, useRef, useState } from "react";
+import { type FC, JSX, useCallback, useEffect, useRef, useState } from "react";
 
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
@@ -225,7 +225,7 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
     }
   };
 
-  const checkPreset = (): void => {
+  const checkPreset = useCallback((): void => {
     for (const preset of PRESETS) {
       const presetRange = getPresetRange(preset.name);
 
@@ -251,7 +251,7 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
     }
 
     setSelectedPreset(undefined);
-  };
+  }, [range]);
 
   const resetValues = (): void => {
     setRange({
@@ -288,7 +288,7 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
 
   useEffect(() => {
     checkPreset();
-  }, [range]);
+  }, [checkPreset]);
 
   // Auto-update when range or rangeCompare changes
   useEffect(() => {
@@ -344,7 +344,7 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
       openedRangeRef.current = range;
       openedRangeCompareRef.current = rangeCompare;
     }
-  }, [isOpen]);
+  }, [isOpen, range, rangeCompare]);
 
   return (
     <Popover

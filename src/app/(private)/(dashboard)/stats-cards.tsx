@@ -90,7 +90,7 @@ export default function StatsCards({ data, session }: Props) {
     iconBgColor: string;
   }[] = [
     {
-      permission: ["transactions:deposits", "transactions:stats"],
+      permission: ["transactions:view"],
       icon: MdOutlineListAlt,
       label: "Deposit Count",
       value: formatNumber(depositsCount),
@@ -98,7 +98,7 @@ export default function StatsCards({ data, session }: Props) {
       iconBgColor: "bg-red-500/10",
     },
     {
-      permission: ["transactions:deposits", "transactions:stats"],
+      permission: ["transactions:view"],
       icon: MdOutlineAttachMoney,
       label: "Deposit Amount",
       value: formatAmount(deposits),
@@ -106,7 +106,7 @@ export default function StatsCards({ data, session }: Props) {
       iconBgColor: "bg-green-500/10",
     },
     {
-      permission: ["transactions:deposits", "transactions:stats"],
+      permission: ["transactions:view"],
       icon: MdOutlineTrendingUp,
       label: "Average Deposit",
       value: formatAmount(avDeposits),
@@ -114,7 +114,7 @@ export default function StatsCards({ data, session }: Props) {
       iconBgColor: "bg-blue-500/10",
     },
     {
-      permission: ["transactions:deposits", "transactions:stats"],
+      permission: ["transactions:view"],
       icon: MdOutlinePersonAdd,
       label: "Average Deposit (New Users)",
       value: formatAmount(avDepositsNewUsers),
@@ -123,7 +123,7 @@ export default function StatsCards({ data, session }: Props) {
       valueDesc: `${formatAmount((Number(avDepositsNewUsers) / Number(avDeposits)) * 100)}%`,
     },
     {
-      permission: ["transactions:withdrawals", "transactions:stats"],
+      permission: ["transactions:view"],
       icon: MdOutlineAccountBalanceWallet,
       label: "Withdrawal Amount",
       value: formatAmount(withdrawals),
@@ -131,7 +131,7 @@ export default function StatsCards({ data, session }: Props) {
       iconBgColor: "bg-pink-500/10",
     },
     {
-      permission: ["users:view", "users:stats"],
+      permission: ["users:view"],
       icon: MdOutlineGroups,
       label: "All Time Users",
       value: formatNumber(allclients),
@@ -139,7 +139,7 @@ export default function StatsCards({ data, session }: Props) {
       iconBgColor: "bg-yellow-500/10",
     },
     {
-      permission: ["users:view", "users:stats"],
+      permission: ["users:view"],
       icon: MdOutlineGroup,
       label: "All Users",
       value: formatNumber(clients),
@@ -148,7 +148,7 @@ export default function StatsCards({ data, session }: Props) {
       valueDesc: `${formatAmount((Number(clients) / Number(allclients)) * 100)}%`,
     },
     {
-      permission: ["games:view", "games:stats"],
+      permission: ["dashboard:view"],
       icon: MdOutlineHowToReg,
       label: "Active Users",
       value: formatNumber(activeClients),
@@ -157,7 +157,7 @@ export default function StatsCards({ data, session }: Props) {
       valueDesc: `${formatAmount((Number(activeClients) / Number(clients)) * 100)}%`,
     },
     {
-      permission: ["games:view", "games:stats"],
+      permission: ["dashboard:view"],
       icon: MdOutlineSportsEsports,
       label: "Total Games",
       value: formatNumber(games),

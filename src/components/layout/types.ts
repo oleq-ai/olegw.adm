@@ -30,12 +30,15 @@ type NavIcon =
   | "MdOutlineGroup"
   | "MdOutlineSecurity"
   | "MdOutlineInsertChart"
+  | "MdOutlineBarChart"
   | "MdOutlineGamepad"
   | "MdOutlineAddBox"
   | "MdOutlineTune"
   | "MdOutlinePerson"
   | "MdAutoGraph"
-  | "MdOutlineGroups3";
+  | "MdOutlineGroups3"
+  | "MdOutlineBusiness"
+  | "MdOutlineStore";
 
 interface BaseNavItem {
   title: string;

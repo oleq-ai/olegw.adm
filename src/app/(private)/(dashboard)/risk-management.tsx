@@ -53,7 +53,7 @@ export default function RiskManagement({ data, session }: Props) {
 
                   <PermissionGate
                     session={session}
-                    permissions={["manage:risk-mitigation"]}
+                    permissions={["dashboard:view"]}
                   >
                     <div className="flex flex-col gap-2 sm:flex-row">
                       <Button variant="outline" size="sm">

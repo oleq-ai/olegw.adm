@@ -17,12 +17,20 @@ export class SessionStore {
     reqCookie?: NextRequest["cookies"]
   ): Promise<SessionStore> {
     const store = new SessionStore(cookieName);
-    const cookieStore = reqCookie || (await cookies());
-    cookieStore.getAll().forEach((cookie) => {
-      if (cookie.name.startsWith(store.cookieName)) {
-        store.chunks[cookie.name] = cookie.value;
-      }
-    });
+
+    try {
+      const cookieStore = reqCookie || (await cookies());
+      cookieStore.getAll().forEach((cookie) => {
+        if (cookie.name.startsWith(store.cookieName)) {
+          store.chunks[cookie.name] = cookie.value;
+        }
+      });
+    } catch {
+      // Handle static export mode where cookies are not available
+      // Return empty store for static generation
+      // console.warn("Cookies not available in static export mode");
+    }
+
     return store;
   }
 
@@ -53,9 +61,14 @@ export class SessionStore {
   }
 
   async clean() {
-    const cookieStore = await cookies();
-    Object.keys(this.chunks).forEach((name) => {
-      cookieStore.delete(name);
-    });
+    try {
+      const cookieStore = await cookies();
+      Object.keys(this.chunks).forEach((name) => {
+        cookieStore.delete(name);
+      });
+    } catch {
+      // Handle static export mode where cookies are not available
+      // console.warn("Cookies not available in static export mode");
+    }
   }
 }

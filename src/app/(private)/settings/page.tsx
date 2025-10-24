@@ -57,12 +57,12 @@ export default async function SettingsPage() {
             View and manage your platform settings
           </p>
         </div>
-        <PermissionGate session={session} permissions={["settings:manage"]}>
+        <PermissionGate session={session} permissions={["dashboard:view"]}>
           <UpdateSettingsForm defaultValues={settings} />
         </PermissionGate>
       </div>
 
-      <PermissionGate session={session} permissions={["settings:view"]}>
+      <PermissionGate session={session} permissions={["dashboard:view"]}>
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="flex flex-col">
             <CardHeader>

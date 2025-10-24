@@ -15,7 +15,13 @@ export class UserService {
     return crypto.createHash("sha512").update(str).digest("hex");
   }
 
-  async create({ password, roleid, ...data }: CreateUserDto): Promise<void> {
+  async create({
+    password,
+    roleid,
+    active,
+    modules,
+    ...data
+  }: CreateUserDto): Promise<void> {
     const hashedPassword = password
       ? this.getHashedString(password)
       : undefined;
@@ -24,8 +30,21 @@ export class UserService {
       data: {
         operation: "createuser",
         ...data,
+        gender:
+          data.gender?.charAt(0).toUpperCase() +
+          data.gender?.slice(1).toLowerCase(),
         roleid: roleid === "custom" ? undefined : roleid,
         password: hashedPassword,
+        active: active ? 1 : 0,
+        modules: modules || [],
+        stations: [],
+        userkey: "",
+        idtype: "National ID",
+        idnumber: "",
+        address: "",
+        county: "",
+        postalcode: "",
+        city: "",
       },
     });
   }

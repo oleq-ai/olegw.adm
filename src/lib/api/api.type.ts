@@ -6,12 +6,11 @@ export type FetcherOperationType =
   | "getusers"
   | "getroles"
   | "createrole"
-  | "savegame"
-  | "getgames"
   | "pullpaymentsin"
   | "pullpaymentsout"
   | "retrywithdrawal"
   | "getdashboard"
+  | "getpaymentdashboard"
   | "pullclients"
   | "pullclient"
   | "issuebonus"
@@ -19,9 +18,22 @@ export type FetcherOperationType =
   | "depositfunds"
   | "getbonusconfig"
   | "bonusconfig"
-  | "getbleaderboard"
   | "clientsettings"
-  | "querypayment";
+  | "querypayment"
+  | "gettransactions"
+  | "getpendingtransaction"
+  | "getpendingtransactions"
+  | "getfailedtransaction"
+  | "getfailedtransactions"
+  | "getcompletedtransaction"
+  | "getcompletedtransactions"
+  | "gettransaction"
+  | "getmerchant"
+  | "getmerchants"
+  | "savemerchant"
+  | "getmerchantperformance"
+  | "getmerchantaccounts"
+  | "savemerchantaccount";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RequestOptions<TData = Record<string, any>> = {

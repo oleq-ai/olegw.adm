@@ -25,10 +25,7 @@ export default async function WithdrawalsPage() {
       <div className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
         <BreadcrumbNav title="Deposits" />
 
-        <PermissionGate
-          session={session}
-          permissions={["transactions:deposits"]}
-        >
+        <PermissionGate session={session} permissions={["transactions:view"]}>
           <div className="flex items-center justify-end gap-2">
             <Button asChild>
               <Link href="/transactions/deposits">
@@ -46,12 +43,9 @@ export default async function WithdrawalsPage() {
             Withdrawal History
           </h3>
 
-          <PermissionGate
-            session={session}
-            permissions={["transactions:withdrawals"]}
-          >
+          <PermissionGate session={session} permissions={["transactions:view"]}>
             <WithdrawalsTable
-              canRetryPayment={hasPermission("transactions:retry")}
+              canRetryPayment={hasPermission("transactions:view")}
             />
           </PermissionGate>
         </div>

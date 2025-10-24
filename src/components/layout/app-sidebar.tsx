@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ComponentProps } from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -37,25 +36,37 @@ export async function AppSidebar({ user, ...props }: Props) {
   const filteredNavGroups = filterNavGroups(sidebarNavGroups, hasAnyPermission);
 
   return (
-    <Sidebar collapsible="icon" variant="floating" {...props}>
-      <SidebarHeader className="relative">
+    <Sidebar
+      collapsible="icon"
+      variant="floating"
+      {...props}
+      className="border-r border-sidebar-border"
+      style={{
+        backgroundColor: "hsl(240 5.9% 10%)",
+        color: "hsl(0 0% 98%)",
+      }}
+    >
+      <SidebarHeader className="relative border-b border-sidebar-border p-6">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              className="relative data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <div className="relative h-8 w-8 flex-shrink-0">
-                <Image
-                  src={`/icons/logo.png`}
-                  alt={`${siteConfig.name} Logo`}
-                  fill
-                  className="object-contain"
-                />
+            <SidebarMenuButton size="lg" className="relative p-0">
+              <div className="flex items-center space-x-3">
+                <div className="relative h-8 w-8 flex-shrink-0 rounded-lg bg-gradient-to-br from-purple-600 to-purple-800 p-1.5">
+                  <svg
+                    className="h-5 w-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    style={{ fill: "currentColor" }}
+                  >
+                    <path d="M4 6h16v2H4V6zm0 4h16v2H4v-2zm0 4h16v2H4v-2zm0 4h16v2H4v-2zM6 8h2v8H6V8zm10 0h2v8h-2V8z" />
+                  </svg>
+                </div>
+                <div className="flex flex-col items-start">
+                  <span className="overflow-hidden whitespace-nowrap text-lg font-bold text-white group-data-[collapsible=icon]:hidden">
+                    {siteConfig.name}
+                  </span>
+                </div>
               </div>
-              <span className="overflow-hidden whitespace-nowrap group-data-[collapsible=icon]:hidden">
-                {siteConfig.name}
-              </span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -71,15 +82,15 @@ export async function AppSidebar({ user, ...props }: Props) {
         </SidebarTrigger>
       </SidebarHeader>
 
-      <SidebarContent className="overflow-y-auto">
+      <SidebarContent className="overflow-y-auto px-4 py-6 pr-2">
         {filteredNavGroups.map((group, groupIndex) => (
-          <div key={group.title} className={cn(groupIndex > 0 && "mt-8")}>
+          <div key={group.title} className={cn(groupIndex > 0 && "mt-2")}>
             <NavGroup {...group} />
           </div>
         ))}
       </SidebarContent>
 
-      <SidebarFooter className="mt-auto border-t border-border">
+      <SidebarFooter className="mt-auto border-t border-sidebar-border p-4">
         <NavUser user={user} />
       </SidebarFooter>
 
