@@ -10,12 +10,9 @@ import {
   ArrowUpRight,
   BarChart3,
   Building2,
-  CheckCircle,
-  Clock,
   CreditCard,
   DollarSign,
   TrendingUp,
-  XCircle,
   Zap,
 } from "lucide-react";
 import {
@@ -33,14 +30,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPaymentDashboardAction } from "@/lib/dashboard/dashboard.actions";
 import { DashboardData } from "@/lib/dashboard/types/dashboard.types";
 
@@ -54,31 +44,17 @@ interface StatCardProps {
   color?: string;
 }
 
-// Enhanced StatCard with better styling and animations
+// Clean StatCard with neutral styling
 function StatCard({
   title,
   value,
   change,
   icon: Icon,
   positive = true,
-  description,
-  color = "blue",
 }: StatCardProps) {
-  const colorClasses = {
-    blue: "from-blue-500 to-blue-600",
-    green: "from-green-500 to-green-600",
-    purple: "from-purple-500 to-purple-600",
-    orange: "from-orange-500 to-orange-600",
-    red: "from-red-500 to-red-600",
-    indigo: "from-indigo-500 to-indigo-600",
-  };
-
   return (
-    <Card className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} opacity-0 transition-opacity duration-300 group-hover:opacity-5`}
-      />
-      <CardContent className="relative p-6">
+    <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
+      <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <div className="mb-2 flex items-center gap-2">
@@ -100,15 +76,10 @@ function StatCard({
                 </div>
               )}
             </div>
-            <div className="mb-1 text-2xl font-bold text-gray-900">{value}</div>
-            {description && (
-              <div className="text-xs text-gray-500">{description}</div>
-            )}
+            <div className="text-2xl font-bold text-gray-900">{value}</div>
           </div>
-          <div
-            className={`rounded-xl bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} p-3 text-white shadow-lg`}
-          >
-            <Icon className="h-6 w-6" />
+          <div className="rounded-lg bg-gray-100 p-3">
+            <Icon className="h-6 w-6 text-gray-600" />
           </div>
         </div>
       </CardContent>
@@ -118,32 +89,21 @@ function StatCard({
 
 function PaymentMethodsChart({ data }: { data: DashboardData }) {
   const colors = [
-    "#8B5CF6",
-    "#06B6D4",
-    "#10B981",
-    "#F59E0B",
-    "#EF4444",
-    "#6366F1",
-    "#F97316",
+    "#6B7280",
+    "#9CA3AF",
+    "#D1D5DB",
+    "#E5E7EB",
+    "#F3F4F6",
+    "#F9FAFB",
   ];
 
   return (
-    <Card className="group rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg">
+    <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
       <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-              <CreditCard className="h-5 w-5 text-blue-600" />
-              Payment Methods
-            </CardTitle>
-            <CardDescription className="text-sm text-gray-600">
-              Transaction breakdown by payment method
-            </CardDescription>
-          </div>
-          <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-            {data.paymentmethods.length} methods
-          </Badge>
-        </div>
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+          <CreditCard className="h-5 w-5 text-gray-600" />
+          Payment Methods
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between">
@@ -185,11 +145,11 @@ function PaymentMethodsChart({ data }: { data: DashboardData }) {
             {data.paymentmethods.map((item, index) => (
               <div
                 key={index}
-                className="group/item flex items-center justify-between rounded-lg p-2 transition-colors hover:bg-gray-50"
+                className="flex items-center justify-between rounded-lg p-2"
               >
                 <div className="flex items-center space-x-3">
                   <div
-                    className="h-4 w-4 rounded-full shadow-sm"
+                    className="h-4 w-4 rounded-full"
                     style={{ backgroundColor: colors[index % colors.length] }}
                   />
                   <div>
@@ -201,9 +161,7 @@ function PaymentMethodsChart({ data }: { data: DashboardData }) {
                     </div>
                   </div>
                 </div>
-                <Badge variant="outline" className="text-xs">
-                  {item.percentage}%
-                </Badge>
+                <div className="text-xs text-gray-500">{item.percentage}%</div>
               </div>
             ))}
           </div>
@@ -218,20 +176,17 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
     {
       name: "Completed",
       value: data.completedcount,
-      color: "#10B981",
-      icon: CheckCircle,
+      color: "#6B7280",
     },
     {
       name: "Failed",
       value: data.failedcount,
-      color: "#EF4444",
-      icon: XCircle,
+      color: "#9CA3AF",
     },
     {
       name: "Pending",
       value: data.pendingcount,
-      color: "#F59E0B",
-      icon: Clock,
+      color: "#D1D5DB",
     },
   ];
 
@@ -239,22 +194,12 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
     data.completedcount + data.failedcount + data.pendingcount;
 
   return (
-    <Card className="group rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg">
+    <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
       <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-              <Activity className="h-5 w-5 text-green-600" />
-              Transaction Status
-            </CardTitle>
-            <CardDescription className="text-sm text-gray-600">
-              Current transaction distribution
-            </CardDescription>
-          </div>
-          <Badge variant="secondary" className="bg-green-100 text-green-700">
-            {totalTransactions} total
-          </Badge>
-        </div>
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+          <Activity className="h-5 w-5 text-gray-600" />
+          Transaction Status
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between">
@@ -291,7 +236,6 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
           </ResponsiveContainer>
           <div className="flex flex-col space-y-4">
             {statusData.map((item, index) => {
-              const Icon = item.icon;
               const percentage =
                 totalTransactions > 0
                   ? ((item.value / totalTransactions) * 100).toFixed(1)
@@ -300,15 +244,13 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
               return (
                 <div
                   key={index}
-                  className="group/item flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-gray-50"
+                  className="flex items-center justify-between rounded-lg p-3"
                 >
                   <div className="flex items-center space-x-3">
                     <div
-                      className="flex h-8 w-8 items-center justify-center rounded-full"
-                      style={{ backgroundColor: `${item.color}20` }}
-                    >
-                      <Icon className="h-4 w-4" style={{ color: item.color }} />
-                    </div>
+                      className="h-4 w-4 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    />
                     <div>
                       <div className="text-sm font-semibold text-gray-700">
                         {item.name}
@@ -319,10 +261,7 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div
-                      className="text-sm font-bold"
-                      style={{ color: item.color }}
-                    >
+                    <div className="text-sm font-bold text-gray-900">
                       {percentage}%
                     </div>
                   </div>
@@ -338,22 +277,12 @@ function TransactionStatusChart({ data }: { data: DashboardData }) {
 
 function TopMerchantsChart({ data }: { data: DashboardData }) {
   return (
-    <Card className="group rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg">
+    <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
       <CardHeader className="pb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-              <Building2 className="h-5 w-5 text-purple-600" />
-              Top Merchants
-            </CardTitle>
-            <CardDescription className="text-sm text-gray-600">
-              Revenue breakdown by top performing merchants
-            </CardDescription>
-          </div>
-          <Badge variant="secondary" className="bg-purple-100 text-purple-700">
-            {data.topmerchants.length} merchants
-          </Badge>
-        </div>
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+          <Building2 className="h-5 w-5 text-gray-600" />
+          Top Merchants
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="mb-6">
@@ -394,24 +323,7 @@ function TopMerchantsChart({ data }: { data: DashboardData }) {
                 ]}
                 labelFormatter={(label) => `Merchant: ${label}`}
               />
-              <Bar
-                dataKey="revenue"
-                fill="url(#merchantGradient)"
-                radius={[6, 6, 0, 0]}
-                className="transition-opacity hover:opacity-80"
-              />
-              <defs>
-                <linearGradient
-                  id="merchantGradient"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop offset="0%" stopColor="#8B5CF6" />
-                  <stop offset="100%" stopColor="#A855F7" />
-                </linearGradient>
-              </defs>
+              <Bar dataKey="revenue" fill="#6B7280" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -419,20 +331,20 @@ function TopMerchantsChart({ data }: { data: DashboardData }) {
           {data.topmerchants.map((merchant, index) => (
             <div
               key={index}
-              className="group/item rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 p-4 transition-all duration-300 hover:border-purple-200 hover:from-purple-50 hover:to-purple-100"
+              className="rounded-xl border border-gray-200 bg-gray-50 p-4"
             >
               <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-600 text-sm font-bold text-white">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 text-sm font-bold text-white">
                     {index + 1}
                   </div>
                   <span className="text-sm font-semibold text-gray-700">
                     {merchant.merchantname}
                   </span>
                 </div>
-                <Badge variant="outline" className="bg-white text-xs">
+                <div className="text-xs text-gray-500">
                   {merchant.transactioncount} txns
-                </Badge>
+                </div>
               </div>
               <div className="mb-1 text-xl font-bold text-gray-900">
                 KES {merchant.revenue.toLocaleString()}
@@ -540,17 +452,12 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="space-y-6">
-        {/* Welcome Header */}
+        {/* Clean Header */}
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div>
-            <h1 className="mb-1 text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600">
-              Monitor your merchant platform performance and analytics
-            </p>
-          </div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
         </div>
 
-        {/* Top Stats Grid */}
+        {/* Stats Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard
             title="Total Revenue"
@@ -558,7 +465,6 @@ export default function Dashboard() {
             change={data.revenuechange}
             icon={DollarSign}
             positive={data.revenuechange >= 0}
-            description="Last 30 days"
             color="green"
           />
           <StatCard
@@ -567,7 +473,6 @@ export default function Dashboard() {
             change={data.transactionchange}
             icon={BarChart3}
             positive={data.transactionchange >= 0}
-            description="All time"
             color="blue"
           />
           <StatCard
@@ -576,7 +481,6 @@ export default function Dashboard() {
             change={data.successratechange}
             icon={Zap}
             positive={data.successratechange >= 0}
-            description="Transaction success"
             color="purple"
           />
           <StatCard
@@ -585,31 +489,23 @@ export default function Dashboard() {
             change={0}
             icon={Building2}
             positive={true}
-            description="Currently active"
             color="orange"
           />
         </div>
 
+        {/* Charts Grid */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <PaymentMethodsChart data={data} />
+          <TransactionStatusChart data={data} />
+        </div>
+
         {/* Trends Chart */}
-        <Card className="group rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg">
+        <Card className="rounded-xl border border-gray-200 bg-white shadow-sm">
           <CardHeader className="pb-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-                  <TrendingUp className="h-5 w-5 text-indigo-600" />
-                  Transaction Trends
-                </CardTitle>
-                <CardDescription className="text-sm text-gray-600">
-                  Transaction volume over time
-                </CardDescription>
-              </div>
-              <Badge
-                variant="secondary"
-                className="bg-indigo-100 text-indigo-700"
-              >
-                {data.trends.length} months
-              </Badge>
-            </div>
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+              <TrendingUp className="h-5 w-5 text-gray-600" />
+              Transaction Trends
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -672,16 +568,8 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <PaymentMethodsChart data={data} />
-          <TransactionStatusChart data={data} />
-        </div>
-
-        {/* Bottom Grid */}
-        <div className="grid grid-cols-1 gap-6">
-          <TopMerchantsChart data={data} />
-        </div>
+        {/* Top Merchants */}
+        <TopMerchantsChart data={data} />
       </div>
     </div>
   );
