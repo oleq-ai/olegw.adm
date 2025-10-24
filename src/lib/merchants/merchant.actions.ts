@@ -9,6 +9,10 @@ import {
 import { SaveMerchantDto, SaveMerchantResponse } from "./dto/merchant.dto";
 import { MerchantService } from "./merchants.service";
 import {
+  AllMerchantsPerformanceData,
+  AllMerchantsPerformanceQuery,
+} from "./types/all-merchants-performance.types";
+import {
   MerchantAccount,
   MerchantAccountsQuery,
 } from "./types/merchant-accounts.types";
@@ -79,6 +83,17 @@ export async function getMerchantAccountsAction(
 ): Promise<Response<MerchantAccount[]>> {
   try {
     const res = await merchantService.getMerchantAccounts(query);
+    return res;
+  } catch (error) {
+    return { success: false, error: getErrorMessage(error) };
+  }
+}
+
+export async function getAllMerchantsPerformanceAction(
+  query: AllMerchantsPerformanceQuery
+): Promise<Response<AllMerchantsPerformanceData>> {
+  try {
+    const res = await merchantService.getAllMerchantsPerformance(query);
     return res;
   } catch (error) {
     return { success: false, error: getErrorMessage(error) };

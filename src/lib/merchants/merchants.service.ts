@@ -8,6 +8,11 @@ import {
 } from "./dto/merchant-account.dto";
 import { SaveMerchantDto, SaveMerchantResponse } from "./dto/merchant.dto";
 import {
+  AllMerchantsPerformanceData,
+  AllMerchantsPerformanceQuery,
+  AllMerchantsPerformanceResponse,
+} from "./types/all-merchants-performance.types";
+import {
   MerchantAccount,
   MerchantAccountsQuery,
   MerchantAccountsResponse,
@@ -172,6 +177,32 @@ export class MerchantService {
           error instanceof Error
             ? error.message
             : "Failed to fetch merchant performance",
+      };
+    }
+  }
+
+  async getAllMerchantsPerformance(
+    query: AllMerchantsPerformanceQuery
+  ): Promise<Response<AllMerchantsPerformanceData>> {
+    try {
+      const res = await this.fetcher.request<AllMerchantsPerformanceResponse>(
+        "/",
+        {
+          data: {
+            operation: "getmerchantperformance",
+            ...query,
+          },
+        }
+      );
+
+      return { success: true, data: res.data };
+    } catch (error) {
+      return {
+        success: false,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch all merchants performance",
       };
     }
   }

@@ -22,6 +22,12 @@ export const sidebarNavGroups: NavGroup[] = [
         permissions: ["users:view"],
       },
       {
+        title: "Reports",
+        url: "/merchants/performance",
+        icon: "MdOutlineBarChart",
+        permissions: ["dashboard:view"],
+      },
+      {
         title: "Accounts",
         url: "/accounts",
         icon: "MdOutlineAccountBalance",
@@ -48,17 +54,6 @@ export const sidebarNavGroups: NavGroup[] = [
         url: "/roles",
         icon: "MdOutlineSecurity",
         permissions: ["roles:view"],
-      },
-    ],
-  },
-  {
-    title: "Analytics & Reports",
-    items: [
-      {
-        title: "Reports",
-        url: "/reports",
-        icon: "MdOutlineInsertChart",
-        permissions: ["dashboard:view"],
       },
     ],
   },

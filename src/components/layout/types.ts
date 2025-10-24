@@ -30,6 +30,7 @@ type NavIcon =
   | "MdOutlineGroup"
   | "MdOutlineSecurity"
   | "MdOutlineInsertChart"
+  | "MdOutlineBarChart"
   | "MdOutlineGamepad"
   | "MdOutlineAddBox"
   | "MdOutlineTune"
